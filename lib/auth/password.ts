@@ -1,4 +1,4 @@
-import bcrypt from "bcrypt";
+import bcrypt from "bcryptjs";
 
 const bcryptRounds = 12;
 const dummyHash = "$2b$12$AnZAe4Z/QwGNNAXUulhiN.QIKrh9FMihNDAAnImcCq7YQThIk.kIC";

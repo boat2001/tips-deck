@@ -95,6 +95,19 @@ The homepage build does not query the database, so it can be previewed before Po
 
 Never commit `.env` files or expose `DATABASE_URL` to browser code.
 
+## Cloudflare Workers deployment
+
+This project uses the OpenNext adapter and must be deployed as a Worker, not as a static Pages export.
+
+For a Cloudflare Git-connected Worker, configure **Settings → Build** with:
+
+- Build command: leave blank
+- Deploy command: `npm run deploy`
+- Non-production deploy command: `npm run upload`
+- Root directory: `/`
+
+Add the runtime variables and secrets listed above under **Settings → Variables & Secrets**. At minimum, production requires `DATABASE_URL`, `NEXT_PUBLIC_APP_URL`, `APP_ENV`, and `CRON_SECRET`. Run `npm run preview` to test the Workers runtime locally on Linux or WSL.
+
 ## Quality checks
 
 Run the complete verification suite:
@@ -118,7 +131,6 @@ app/
 components/
   layout/            Header and footer
   ui/                Reusable interface primitives
-generated/prisma/    Generated Prisma client (not committed)
 lib/
   config/            Product configuration
   db/                Server-only database client factory

@@ -1,7 +1,7 @@
 import "dotenv/config";
-import bcrypt from "bcrypt";
+import bcrypt from "bcryptjs";
 import { PrismaPg } from "@prisma/adapter-pg";
-import { PrismaClient } from "../generated/prisma/client";
+import { PrismaClient } from "@prisma/client";
 import { getFixtureDateWindows } from "../lib/football/dates";
 import { MockFootballProvider } from "../lib/football/mock-provider";
 import { createPrismaFixtureRepository } from "../lib/football/repository";

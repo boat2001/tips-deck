@@ -1,4 +1,4 @@
-import type { Deck, Fixture, League, Prediction, Team } from "@/generated/prisma/client";
+import type { Deck, Fixture, League, Prediction, Team } from "@prisma/client";
 
 type FixtureOption = Fixture & { league: League; homeTeam: Team; awayTeam: Team };
 type PredictionValue = Prediction | null;

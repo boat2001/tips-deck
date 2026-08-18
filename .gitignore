@@ -5,6 +5,8 @@
 # next.js
 /.next/
 /out/
+/.open-next/
+/.wrangler/
 
 # production
 /build
@@ -14,6 +16,7 @@
 .env.local
 .env.*.local
 !.env.example
+.dev.vars
 
 # testing
 /coverage

@@ -1,0 +1,8 @@
+import type { Metadata } from "next";
+
+export const metadata: Metadata = { title: "Privacy Policy", description: "How Tips Deck collects, uses and protects account and service data." };
+
+export default function PrivacyPage() {
+  const sections = [["Information we collect", "We store the account details you provide, including your username, email address, phone number and profile details. Passwords are stored only as secure hashes."], ["How we use information", "We use account data to authenticate you, provide member features, protect the service, respond to support requests and improve Tips Deck."], ["Security and sessions", "Login sessions use secure HTTP-only cookies. Session tokens and password-reset tokens are stored as one-way hashes, and security-sensitive account activity is audited."], ["Sharing and retention", "We do not sell personal information. Data may be disclosed to service providers or authorities only where necessary to operate the service or comply with law."], ["Your choices", "You may update your profile from Account Settings. Contact us if you need help accessing, correcting or requesting deletion of your personal information."]] as const;
+  return <main className="bg-white px-5 py-16 sm:px-8"><article className="mx-auto max-w-3xl"><h1 className="text-4xl font-black tracking-[-0.05em] text-slate-950">Privacy Policy</h1><p className="mt-4 text-sm text-slate-400">Last updated: 14 August 2026</p><div className="mt-8 space-y-8">{sections.map(([title, copy]) => <section key={title}><h2 className="text-xl font-black text-slate-950">{title}</h2><p className="mt-3 text-base leading-8 text-slate-600">{copy}</p></section>)}</div></article></main>;
+}

@@ -5,7 +5,7 @@ import { getCurrentUser } from "@/lib/auth/session";
 import { getDatabase } from "@/lib/db/client";
 
 export const dynamic = "force-dynamic";
-export const metadata: Metadata = { title: "VIP Plans", description: "Choose a Tips Deck VIP plan for premium sports betting tips and full match analysis." };
+export const metadata: Metadata = { title: "VIP Plans", description: "Choose a Tips Deck VIP plan for premium sports betting tips and full match analysis.", alternates: { canonical: "/vip" } };
 
 function formatMoney(amountMinor: number, currency: string) {
   return new Intl.NumberFormat("en-GH", { style: "currency", currency, minimumFractionDigits: 2 }).format(amountMinor / 100);

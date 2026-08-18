@@ -1,14 +1,50 @@
 import type { Metadata, Viewport } from "next";
 import "./globals.css";
-import { siteConfig } from "@/lib/config/site";
+import { getSiteUrl, siteConfig } from "@/lib/config/site";
+
+const siteUrl = getSiteUrl();
 
 export const metadata: Metadata = {
-  metadataBase: new URL(process.env.NEXT_PUBLIC_APP_URL ?? "http://localhost:3000"),
+  metadataBase: siteUrl,
   title: {
     default: `${siteConfig.name} - Premium Sports Betting Tips & Predictions`,
     template: `%s | ${siteConfig.name}`,
   },
   description: siteConfig.description,
+  applicationName: siteConfig.name,
+  authors: [{ name: siteConfig.name, url: siteUrl }],
+  creator: siteConfig.name,
+  publisher: siteConfig.name,
+  category: "sports",
+  verification: process.env.GOOGLE_SITE_VERIFICATION
+    ? { google: process.env.GOOGLE_SITE_VERIFICATION }
+    : undefined,
+  openGraph: {
+    type: "website",
+    url: "/",
+    siteName: siteConfig.name,
+    title: `${siteConfig.name} - Premium Sports Betting Tips & Predictions`,
+    description: siteConfig.description,
+    locale: siteConfig.locale,
+    images: [{ url: "/opengraph-image", width: 1200, height: 630, alt: `${siteConfig.name} - ${siteConfig.tagline}` }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: `${siteConfig.name} - Premium Sports Betting Tips & Predictions`,
+    description: siteConfig.description,
+    images: ["/twitter-image"],
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+      "max-video-preview": -1,
+    },
+  },
   icons: {
     icon: [{ url: "/brand/tips-deck-favicon.png", type: "image/png", sizes: "512x512" }],
     shortcut: "/brand/tips-deck-favicon.png",

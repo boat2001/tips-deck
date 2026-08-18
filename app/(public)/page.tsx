@@ -5,6 +5,9 @@ import { fromDateKey, getFixtureDateWindows } from "@/lib/football/dates";
 import { getPredictionDayBoard, getPublicPerformance, type PublicPrediction } from "@/lib/predictions/queries";
 import { getCurrentUser } from "@/lib/auth/session";
 import { getPremiumAccessContext } from "@/lib/auth/authorization";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = { alternates: { canonical: "/" } };
 
 export const dynamic = "force-dynamic";
 
@@ -40,7 +43,7 @@ export default async function HomePage({ searchParams }: { searchParams: Promise
         <div className="relative mx-auto flex min-h-[32rem] max-w-7xl items-center px-5 py-10 sm:min-h-[34rem] sm:px-8 sm:py-12 lg:min-h-[36rem]">
           <div className="max-w-4xl">
             <span className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/8 px-4 py-2 text-xs font-extrabold uppercase tracking-[0.12em] text-lime-300">
-              Daily sports tips and predictions
+              Your destination for winning
             </span>
             <h1 className="mt-5 text-5xl font-black leading-[0.92] tracking-[-0.065em] sm:text-7xl lg:text-[5.5rem]">Smarter sports picks, every day.</h1>
             <p className="mt-4 max-w-xl text-lg leading-8 text-emerald-50/72">Get free daily predictions, clear match analysis and premium selections from the Tips Deck sports desk.</p>

@@ -5,7 +5,7 @@ import { getPremiumAccessContext } from "@/lib/auth/authorization";
 import { fromDateKey } from "@/lib/football/dates";
 
 export const dynamic = "force-dynamic";
-export const metadata: Metadata = { title: "Predictions", description: "View free sports betting tips, premium predictions and match analysis." };
+export const metadata: Metadata = { title: "Predictions", description: "View free sports betting tips, premium predictions and match analysis.", alternates: { canonical: "/predictions" } };
 
 export default async function PredictionsPage({ searchParams }: { searchParams: Promise<{ date?: string }> }) {
   const referenceDate = fromDateKey((await searchParams).date) ?? new Date();

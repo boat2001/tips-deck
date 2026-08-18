@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 
-export const metadata: Metadata = { title: "About Us", description: "Learn about Tips Deck and our approach to sports betting tips and predictions." };
+export const metadata: Metadata = { title: "About Us", description: "Learn about Tips Deck and our approach to sports betting tips and predictions.", alternates: { canonical: "/about" } };
 
 export default function AboutPage() {
   return (

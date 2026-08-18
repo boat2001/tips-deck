@@ -6,7 +6,7 @@ import { getPremiumAccessContext, requireUser } from "@/lib/auth/authorization";
 import { getDatabase } from "@/lib/db/client";
 
 export const dynamic = "force-dynamic";
-export const metadata: Metadata = { title: "Settings", description: "Manage your Tips Deck account settings and membership." };
+export const metadata: Metadata = { title: "Settings", description: "Manage your Tips Deck account settings and membership.", robots: { index: false, follow: false } };
 
 export default async function AccountPage({ searchParams }: { searchParams: Promise<{ error?: string }> }) {
   const user = await requireUser();

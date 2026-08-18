@@ -182,3 +182,11 @@ export async function getPublicPerformance() {
     winRate: settled > 0 ? Math.round((won / settled) * 100) : 0,
   };
 }
+
+export async function getPublishedPredictionSitemapRows() {
+  return getDatabase().prediction.findMany({
+    where: { status: "PUBLISHED" },
+    select: { slug: true, updatedAt: true },
+    orderBy: { updatedAt: "desc" },
+  });
+}

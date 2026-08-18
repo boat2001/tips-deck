@@ -10,7 +10,14 @@ export const dynamic = "force-dynamic";
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const { slug } = await params;
   const prediction = await getPublicPredictionBySlug(slug);
-  return prediction ? { title: `${prediction.homeTeam} vs ${prediction.awayTeam} Prediction`, description: `Sports betting tip and match analysis for ${prediction.homeTeam} vs ${prediction.awayTeam}.` } : { title: "Prediction" };
+  const title = prediction ? `${prediction.homeTeam} vs ${prediction.awayTeam} Prediction` : "Prediction";
+  const description = prediction ? `Sports betting tip and match analysis for ${prediction.homeTeam} vs ${prediction.awayTeam}.` : "Tips Deck sports prediction.";
+  return {
+    title,
+    description,
+    alternates: { canonical: `/predictions/${slug}` },
+    openGraph: { type: "article", url: `/predictions/${slug}`, title, description },
+  };
 }
 
 export default async function PredictionDetailPage({ params }: { params: Promise<{ slug: string }> }) {

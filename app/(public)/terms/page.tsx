@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 
-export const metadata: Metadata = { title: "Terms of Service", description: "Terms governing your use of Tips Deck sports tips, predictions and account services." };
+export const metadata: Metadata = { title: "Terms of Service", description: "Terms governing your use of Tips Deck sports tips, predictions and account services.", alternates: { canonical: "/terms" } };
 
 export default function TermsPage() {
   const sections = [["Using Tips Deck", "Tips Deck provides sports betting tips, predictions and match analysis for informational purposes. You must be at least 18 years old and legally permitted to use betting-related services in your location."], ["No guaranteed results", "Every prediction is an opinion based on available information. No result, return or profit is guaranteed, and you remain responsible for every betting decision you make."], ["Your account", "Keep your login details secure and provide accurate account information. We may restrict accounts used unlawfully, fraudulently or in a way that harms the service or other members."], ["VIP access", "VIP features may be subject to separate pricing, duration and payment terms when payments become available. Access must not be copied, resold or shared without permission."], ["Responsible gaming", "Set limits, never borrow money to bet and never chase losses. Stop betting and seek professional support if gambling is causing harm."]] as const;

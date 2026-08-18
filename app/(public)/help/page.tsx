@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 
-export const metadata: Metadata = { title: "Help Center", description: "Get help using Tips Deck predictions, accounts and VIP features." };
+export const metadata: Metadata = { title: "Help Center", description: "Get help using Tips Deck predictions, accounts and VIP features.", alternates: { canonical: "/help" } };
 
 export default function HelpPage() {
   const topics = [["Predictions", "Browse free and premium sports tips for yesterday, today and tomorrow.", "/predictions"], ["Account Settings", "Update your profile and review your membership status.", "/account"], ["VIP Plans", "Learn what is included with premium Tips Deck access.", "/vip"]] as const;

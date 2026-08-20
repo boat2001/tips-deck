@@ -26,13 +26,13 @@ export const metadata: Metadata = {
     title: `${siteConfig.name} - Premium Sports Betting Tips & Predictions`,
     description: siteConfig.description,
     locale: siteConfig.locale,
-    images: [{ url: "/opengraph-image", width: 1200, height: 630, alt: `${siteConfig.name} - ${siteConfig.tagline}` }],
+    images: [{ url: "/brand/hero-stadium.png", width: 1659, height: 948, alt: `${siteConfig.name} - ${siteConfig.tagline}` }],
   },
   twitter: {
     card: "summary_large_image",
     title: `${siteConfig.name} - Premium Sports Betting Tips & Predictions`,
     description: siteConfig.description,
-    images: ["/twitter-image"],
+    images: ["/brand/hero-stadium.png"],
   },
   robots: {
     index: true,

@@ -104,41 +104,43 @@ export function PredictionBoard({ days }: { days: DayBoard[] }) {
         </div>
       </div>
 
-      <div className="hidden grid-cols-[1.5fr_1fr_0.45fr] border-b border-slate-200 bg-slate-50 px-6 py-3 text-[0.68rem] font-black uppercase tracking-[0.12em] text-slate-400 sm:grid">
-        <span>Teams</span><span>Tips</span><span className="text-right">Results</span>
-      </div>
-
       {predictions.length === 0 ? (
         <div className="px-6 py-14 text-center">
           <p className="font-extrabold text-slate-900">No predictions found</p>
           <p className="mt-1 text-sm text-slate-500">Try another day or clear your search.</p>
         </div>
       ) : (
-        <div className="divide-y divide-slate-100">
-          {predictions.map((prediction) => (
-            <article key={prediction.id} className="grid gap-4 px-5 py-5 transition hover:bg-slate-50 sm:grid-cols-[1.5fr_1fr_0.45fr] sm:items-center sm:px-6">
-              <div className="min-w-0">
-                <div className="mb-2 flex items-center gap-2 text-[0.67rem] font-bold uppercase tracking-[0.1em] text-slate-400">
-                  <span>{prediction.league}</span><span>·</span><span>{formatTime(prediction.kickoffAt)} UTC</span>
-                </div>
-                <p className="truncate text-sm font-extrabold text-slate-900 sm:text-base">{prediction.homeTeam} <span className="font-medium text-slate-400">vs</span> {prediction.awayTeam}</p>
-              </div>
-              <div>
-                {prediction.locked ? (
-                  <Link href="/vip" className="inline-flex items-center gap-2 rounded-lg bg-amber-50 px-3 py-2 text-xs font-extrabold text-amber-700"><span aria-hidden="true">◆</span> VIP Prediction</Link>
-                ) : (
-                  <div>
-                    <p className="text-[0.67rem] font-bold uppercase tracking-[0.1em] text-emerald-600">{prediction.market}</p>
-                    <Link href={`/predictions/${prediction.slug}`} className="mt-1 inline-block text-sm font-extrabold text-slate-900 hover:text-emerald-700">{prediction.selection} <span className="font-semibold text-slate-400">@ {prediction.odds}</span></Link>
+        <div className="overflow-x-auto overscroll-x-contain" role="region" aria-label={`${day.label} predictions table`} tabIndex={0}>
+          <div className="min-w-[680px]">
+            <div className="grid grid-cols-[minmax(300px,1.5fr)_minmax(220px,1fr)_100px] border-b border-slate-200 bg-slate-50 px-6 py-3 text-[0.68rem] font-black uppercase tracking-[0.12em] text-slate-400">
+              <span>Teams</span><span>Tips</span><span className="text-right">Results</span>
+            </div>
+            <div className="divide-y divide-slate-100">
+              {predictions.map((prediction) => (
+                <article key={prediction.id} className="grid grid-cols-[minmax(300px,1.5fr)_minmax(220px,1fr)_100px] items-center px-6 py-5 transition hover:bg-slate-50">
+                  <div className="min-w-0 pr-6">
+                    <div className="mb-2 flex items-center gap-2 text-[0.67rem] font-bold uppercase tracking-[0.1em] text-slate-400">
+                      <span>{prediction.league}</span><span>·</span><span>{formatTime(prediction.kickoffAt)} UTC</span>
+                    </div>
+                    <p className="truncate text-sm font-extrabold text-slate-900 sm:text-base">{prediction.homeTeam} <span className="font-medium text-slate-400">vs</span> {prediction.awayTeam}</p>
                   </div>
-                )}
-              </div>
-              <div className="flex items-center justify-between sm:justify-end">
-                <span className="text-[0.65rem] font-black uppercase tracking-[0.1em] text-slate-400 sm:hidden">Result</span>
-                <Result prediction={prediction} />
-              </div>
-            </article>
-          ))}
+                  <div className="pr-6">
+                    {prediction.locked ? (
+                      <Link href="/vip" className="inline-flex items-center gap-2 rounded-lg bg-amber-50 px-3 py-2 text-xs font-extrabold text-amber-700"><span aria-hidden="true">◆</span> VIP Prediction</Link>
+                    ) : (
+                      <div>
+                        <p className="text-[0.67rem] font-bold uppercase tracking-[0.1em] text-emerald-600">{prediction.market}</p>
+                        <Link href={`/predictions/${prediction.slug}`} className="mt-1 inline-block text-sm font-extrabold text-slate-900 hover:text-emerald-700">{prediction.selection} <span className="font-semibold text-slate-400">@ {prediction.odds}</span></Link>
+                      </div>
+                    )}
+                  </div>
+                  <div className="flex items-center justify-end">
+                    <Result prediction={prediction} />
+                  </div>
+                </article>
+              ))}
+            </div>
+          </div>
         </div>
       )}
 

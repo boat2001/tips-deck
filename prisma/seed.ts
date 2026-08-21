@@ -67,32 +67,50 @@ async function main() {
 
   const vipDeck = await prisma.deck.upsert({
     where: { slug: "vip-deck" },
-    update: {},
+    update: {
+      name: "VIP 1 Deck",
+      description: "Daily premium selections for the VIP 1 package.",
+      icon: "V1",
+      isPremium: true,
+      sortOrder: 2,
+    },
     create: {
-      name: "VIP Deck",
+      name: "VIP 1 Deck",
       slug: "vip-deck",
-      description: "Premium match analysis and higher-conviction selections.",
-      icon: "VIP",
+      description: "Daily premium selections for the VIP 1 package.",
+      icon: "V1",
       visualIdentifier: "emerald",
       isPremium: true,
       sortOrder: 2,
     },
   });
 
+  const vipTwoDeck = await prisma.deck.upsert({
+    where: { slug: "vip-2-deck" },
+    update: { name: "VIP 2 Deck", description: "Higher-value daily selections for the VIP 2 package.", icon: "V2", isPremium: true, sortOrder: 3 },
+    create: { name: "VIP 2 Deck", slug: "vip-2-deck", description: "Higher-value daily selections for the VIP 2 package.", icon: "V2", visualIdentifier: "amber", isPremium: true, sortOrder: 3 },
+  });
+
+  const vipThreeDeck = await prisma.deck.upsert({
+    where: { slug: "vip-3-deck" },
+    update: { name: "VIP 3 Deck", description: "Top-tier daily selections for the VIP 3 package.", icon: "V3", isPremium: true, sortOrder: 4 },
+    create: { name: "VIP 3 Deck", slug: "vip-3-deck", description: "Top-tier daily selections for the VIP 3 package.", icon: "V3", visualIdentifier: "navy", isPremium: true, sortOrder: 4 },
+  });
+
   await prisma.plan.upsert({
     where: { slug: "vip-day-pass" },
-    update: {},
-    create: { name: "VIP Day Pass", slug: "vip-day-pass", description: "One-day access to the VIP Deck and its premium predictions.", priceMinor: 1000, currency: "GHS", durationDays: 1, scope: "DECK", deckId: vipDeck.id, sortOrder: 1 },
+    update: { name: "VIP 1", description: "One-day access to carefully selected VIP 1 sports predictions.", priceMinor: 70000, currency: "GHS", durationDays: 1, scope: "DECK", deckId: vipDeck.id, sortOrder: 1, isActive: true },
+    create: { name: "VIP 1", slug: "vip-day-pass", description: "One-day access to carefully selected VIP 1 sports predictions.", priceMinor: 70000, currency: "GHS", durationDays: 1, scope: "DECK", deckId: vipDeck.id, sortOrder: 1 },
   });
   await prisma.plan.upsert({
     where: { slug: "vip-weekly" },
-    update: {},
-    create: { name: "VIP Weekly", slug: "vip-weekly", description: "Seven days of access to every premium prediction and VIP Deck.", priceMinor: 2000, currency: "GHS", durationDays: 7, scope: "ALL_PREMIUM", sortOrder: 2 },
+    update: { name: "VIP 2", description: "One-day access to higher-value VIP 2 sports predictions.", priceMinor: 100000, currency: "GHS", durationDays: 1, scope: "DECK", deckId: vipTwoDeck.id, sortOrder: 2, isActive: true },
+    create: { name: "VIP 2", slug: "vip-weekly", description: "One-day access to higher-value VIP 2 sports predictions.", priceMinor: 100000, currency: "GHS", durationDays: 1, scope: "DECK", deckId: vipTwoDeck.id, sortOrder: 2 },
   });
   await prisma.plan.upsert({
     where: { slug: "vip-monthly" },
-    update: {},
-    create: { name: "VIP Monthly", slug: "vip-monthly", description: "Thirty days of complete premium access at the best monthly value.", priceMinor: 5000, currency: "GHS", durationDays: 30, scope: "ALL_PREMIUM", sortOrder: 3 },
+    update: { name: "VIP 3", description: "One-day access to our top-tier VIP 3 sports predictions.", priceMinor: 800000, currency: "GHS", durationDays: 1, scope: "DECK", deckId: vipThreeDeck.id, sortOrder: 3, isActive: true },
+    create: { name: "VIP 3", slug: "vip-monthly", description: "One-day access to our top-tier VIP 3 sports predictions.", priceMinor: 800000, currency: "GHS", durationDays: 1, scope: "DECK", deckId: vipThreeDeck.id, sortOrder: 3 },
   });
 
   const todayFixtures = await prisma.fixture.findMany({

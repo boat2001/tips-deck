@@ -1,5 +1,6 @@
 import { PrismaPg } from "@prisma/adapter-pg";
 import { PrismaClient } from "@prisma/client";
+import { normalizeDatabaseConnectionString } from "@/lib/db/connection-string";
 
 const globalForPrisma = globalThis as unknown as {
   prisma?: PrismaClient;
@@ -18,7 +19,10 @@ function createPrismaClient() {
     throw new Error("DATABASE_URL is not configured.");
   }
 
-  const adapter = new PrismaPg({ connectionString, maxUses: 1 });
+  const adapter = new PrismaPg({
+    connectionString: normalizeDatabaseConnectionString(connectionString),
+    maxUses: 1,
+  });
   return new PrismaClient({ adapter });
 }
 

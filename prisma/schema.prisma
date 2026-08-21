@@ -121,24 +121,24 @@ model Team {
 }
 
 model Fixture {
-  id            String        @id @default(cuid())
-  externalId    String        @unique
-  leagueId      String
-  homeTeamId    String
-  awayTeamId    String
-  kickoffAt     DateTime
-  status        FixtureStatus @default(SCHEDULED)
-  homeScore     Int?
-  awayScore     Int?
-  venue         String?
-  provider      String        @default("mock")
-  providerData  Json?
-  predictions   Prediction[]
-  league        League        @relation(fields: [leagueId], references: [id], onDelete: Restrict)
-  homeTeam      Team          @relation("HomeTeam", fields: [homeTeamId], references: [id], onDelete: Restrict)
-  awayTeam      Team          @relation("AwayTeam", fields: [awayTeamId], references: [id], onDelete: Restrict)
-  createdAt     DateTime      @default(now())
-  updatedAt     DateTime      @updatedAt
+  id           String        @id @default(cuid())
+  externalId   String        @unique
+  leagueId     String
+  homeTeamId   String
+  awayTeamId   String
+  kickoffAt    DateTime
+  status       FixtureStatus @default(SCHEDULED)
+  homeScore    Int?
+  awayScore    Int?
+  venue        String?
+  provider     String        @default("mock")
+  providerData Json?
+  predictions  Prediction[]
+  league       League        @relation(fields: [leagueId], references: [id], onDelete: Restrict)
+  homeTeam     Team          @relation("HomeTeam", fields: [homeTeamId], references: [id], onDelete: Restrict)
+  awayTeam     Team          @relation("AwayTeam", fields: [awayTeamId], references: [id], onDelete: Restrict)
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
 
   @@index([kickoffAt])
   @@index([leagueId, kickoffAt])
@@ -147,20 +147,20 @@ model Fixture {
 }
 
 model Deck {
-  id               String       @id @default(cuid())
+  id               String         @id @default(cuid())
   name             String
-  slug             String       @unique
+  slug             String         @unique
   description      String
   icon             String?
   visualIdentifier String?
-  isPremium        Boolean      @default(false)
-  isActive         Boolean      @default(true)
-  sortOrder        Int          @default(0)
+  isPremium        Boolean        @default(false)
+  isActive         Boolean        @default(true)
+  sortOrder        Int            @default(0)
   predictions      Prediction[]
   plans            Plan[]
   subscriptions    Subscription[]
-  createdAt        DateTime     @default(now())
-  updatedAt        DateTime     @updatedAt
+  createdAt        DateTime       @default(now())
+  updatedAt        DateTime       @updatedAt
 
   @@index([isActive, sortOrder])
   @@map("decks")
@@ -184,8 +184,8 @@ model Prediction {
   bookingId   String?
   fixture     Fixture                 @relation(fields: [fixtureId], references: [id], onDelete: Restrict)
   deck        Deck?                   @relation(fields: [deckId], references: [id], onDelete: SetNull)
-  createdBy   User                     @relation(fields: [createdById], references: [id], onDelete: Restrict)
-  booking     Booking?                  @relation(fields: [bookingId], references: [id], onDelete: Cascade)
+  createdBy   User                    @relation(fields: [createdById], references: [id], onDelete: Restrict)
+  booking     Booking?                @relation(fields: [bookingId], references: [id], onDelete: Cascade)
   createdAt   DateTime                @default(now())
   updatedAt   DateTime                @updatedAt
 
@@ -215,8 +215,8 @@ model User {
   auditLogs          AuditLog[]
   payments           Payment[]
   subscriptions      Subscription[]
-  createdAt          DateTime              @default(now())
-  updatedAt          DateTime              @updatedAt
+  createdAt          DateTime             @default(now())
+  updatedAt          DateTime             @updatedAt
 
   @@index([role, isActive])
   @@index([premiumAccessUntil])
@@ -228,7 +228,7 @@ model Plan {
   name          String
   slug          String         @unique
   description   String
-  priceMinor    Int
+  priceMinor    Int            @default(0)
   currency      String         @default("GHS")
   durationDays  Int
   scope         PlanScope      @default(ALL_PREMIUM)
@@ -248,19 +248,20 @@ model Plan {
 }
 
 model Booking {
-  id          String   @id @default(cuid())
-  title       String   @default("Booking Code")
+  id          String       @id @default(cuid())
+  title       String       @default("Booking Code")
   platform    String
-  code        String   @unique
+  code        String       @unique
   category    SlipCategory @default(FREE)
   shareUrl    String?
-  totalOdds   Decimal? @db.Decimal(12, 2)
+  totalOdds   Decimal?     @db.Decimal(12, 2)
+  priceMinor  Int?
   deadline    DateTime?
-  bookingDate DateTime @db.Date
-  isActive    Boolean  @default(true)
-  sortOrder   Int      @default(0)
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  bookingDate DateTime     @db.Date
+  isActive    Boolean      @default(true)
+  sortOrder   Int          @default(0)
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
   predictions Prediction[]
 
   @@index([bookingDate, isActive, sortOrder])
@@ -269,26 +270,26 @@ model Booking {
 }
 
 model Payment {
-  id                  String          @id @default(cuid())
-  reference           String          @unique
-  provider            PaymentProvider @default(PAYSTACK)
-  providerReference   String?
-  userId              String
-  planId              String
-  amountMinor         Int
-  currency            String
-  status              PaymentStatus   @default(PENDING)
-  authorizationUrl    String?
-  accessCode          String?
-  gatewayResponse     String?
-  providerData        Json?
-  paidAt              DateTime?
-  verifiedAt          DateTime?
-  user                User            @relation(fields: [userId], references: [id], onDelete: Restrict)
-  plan                Plan            @relation(fields: [planId], references: [id], onDelete: Restrict)
-  subscription        Subscription?
-  createdAt           DateTime         @default(now())
-  updatedAt           DateTime         @updatedAt
+  id                String          @id @default(cuid())
+  reference         String          @unique
+  provider          PaymentProvider @default(PAYSTACK)
+  providerReference String?
+  userId            String
+  planId            String
+  amountMinor       Int
+  currency          String
+  status            PaymentStatus   @default(PENDING)
+  authorizationUrl  String?
+  accessCode        String?
+  gatewayResponse   String?
+  providerData      Json?
+  paidAt            DateTime?
+  verifiedAt        DateTime?
+  user              User            @relation(fields: [userId], references: [id], onDelete: Restrict)
+  plan              Plan            @relation(fields: [planId], references: [id], onDelete: Restrict)
+  subscription      Subscription?
+  createdAt         DateTime        @default(now())
+  updatedAt         DateTime        @updatedAt
 
   @@index([userId, createdAt])
   @@index([status, createdAt])
@@ -310,8 +311,8 @@ model Subscription {
   plan             Plan               @relation(fields: [planId], references: [id], onDelete: Restrict)
   payment          Payment            @relation(fields: [paymentId], references: [id], onDelete: Restrict)
   deck             Deck?              @relation(fields: [deckId], references: [id], onDelete: SetNull)
-  createdAt        DateTime            @default(now())
-  updatedAt        DateTime            @updatedAt
+  createdAt        DateTime           @default(now())
+  updatedAt        DateTime           @updatedAt
 
   @@index([userId, status, expiresAt])
   @@index([deckId, status, expiresAt])

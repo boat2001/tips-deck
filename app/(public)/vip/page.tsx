@@ -33,12 +33,10 @@ export default async function VipPage({ searchParams }: { searchParams: Promise<
   return (
     <main className="bg-[#f7f9f8] px-5 py-16 sm:px-8 sm:py-20">
       <div className="mx-auto max-w-5xl text-center">
-        <p className="text-xs font-black uppercase tracking-[0.16em] text-emerald-600">Premium sports tips</p>
-        <h1 className="mt-4 text-4xl font-black tracking-[-0.05em] text-slate-950 sm:text-6xl">Choose Your VIP Deck</h1>
-        <p className="mx-auto mt-5 max-w-2xl text-base leading-7 text-slate-500">Choose from today&apos;s admin-curated VIP selections. Each available deck has its own price and closes when it is sold out.</p>
+        <h1 className="text-2xl font-black tracking-[-0.04em] text-slate-950 sm:text-4xl">Choose Your VIP Deck</h1>
       </div>
 
-      <div className="mx-auto mt-12 grid max-w-5xl gap-5 md:grid-cols-3">
+      <div className="mx-auto mt-8 grid max-w-5xl gap-5 md:grid-cols-3">
         {plans.map((plan, index) => {
           const category = plan.deck?.slug ? categoryByDeckSlug[plan.deck.slug as keyof typeof categoryByDeckSlug] : undefined;
           const booking = category ? currentVipBookings.get(category) : undefined;
@@ -47,7 +45,7 @@ export default async function VipPage({ searchParams }: { searchParams: Promise<
             <article key={plan.id} className={`relative flex flex-col overflow-hidden rounded-2xl border bg-white p-7 text-center shadow-[0_15px_40px_rgba(15,23,42,0.06)] ${unavailable ? "border-red-200 bg-red-50/30" : index === 1 ? "border-emerald-500 ring-2 ring-emerald-100" : "border-slate-200"}`}>
               {!unavailable && index === 1 ? <span className="absolute right-0 top-0 rounded-bl-xl bg-emerald-600 px-4 py-2 text-[0.65rem] font-black uppercase tracking-wide text-white">Most Popular</span> : null}
               <p className={`text-xs font-black uppercase tracking-[0.14em] ${unavailable ? "text-red-500" : "text-emerald-600"}`}>{unavailable ? "Currently unavailable" : "Available today"}</p>
-              <h2 className="mt-4 text-3xl font-black text-slate-950">{plan.name}</h2>
+              <h2 className="mt-4 text-xl font-black text-slate-950">{plan.name}</h2>
               <p className="mt-3 min-h-12 text-sm leading-6 text-slate-500">{plan.description}</p>
               {unavailable ? <p className="mt-7 text-sm font-bold text-red-500">Price shown when available</p> : <><p className="mt-7 text-4xl font-black tracking-[-0.04em] text-emerald-700">{formatMoney(plan.priceMinor, plan.currency)}</p><p className="mt-1 text-xs font-bold text-slate-400">Current deck price · {plan.durationDays} {plan.durationDays === 1 ? "day" : "days"} access</p></>}
               <ul className="mt-6 space-y-3 border-t border-slate-100 pt-5 text-left text-sm font-semibold text-slate-700">

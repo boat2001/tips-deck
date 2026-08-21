@@ -42,10 +42,7 @@ export default async function HomePage({ searchParams }: { searchParams: Promise
         <div className="absolute inset-0 -z-10 bg-gradient-to-t from-[#032d20]/75 via-transparent to-[#032d20]/30" aria-hidden="true" />
         <div className="relative mx-auto flex min-h-[32rem] max-w-7xl items-center px-5 py-10 sm:min-h-[34rem] sm:px-8 sm:py-12 lg:min-h-[36rem]">
           <div className="max-w-4xl">
-            <span className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/8 px-4 py-2 text-xs font-extrabold uppercase tracking-[0.12em] text-lime-300">
-              Your destination to win big 🎉
-            </span>
-            <h1 className="mt-5 text-5xl font-black leading-[0.92] tracking-[-0.065em] sm:text-7xl lg:text-[5.5rem]">Smarter sports picks, every day.</h1>
+            <h1 className="display-heading text-5xl font-black leading-[0.92] tracking-[-0.065em] sm:text-7xl lg:text-[5.5rem]">Smarter sports picks, every day.</h1>
             <p className="mt-4 max-w-xl text-lg leading-8 text-emerald-50/72">Get free daily predictions, clear match analysis and premium selections from the Tips Deck sports desk.</p>
 
             <div className="mt-6 flex flex-wrap gap-3">
@@ -72,10 +69,8 @@ export default async function HomePage({ searchParams }: { searchParams: Promise
 
       <section id="free-tips" className="bg-[#f7f9f8] px-5 py-12 sm:px-8 sm:py-16">
         <div className="mx-auto max-w-5xl">
-          <div className="mb-10 text-center">
-            <p className="text-xs font-black uppercase tracking-[0.16em] text-emerald-600">Updated daily</p>
-            <h2 className="mt-3 text-3xl font-black tracking-[-0.045em] text-slate-950 sm:text-5xl">Free Tips &amp; Predictions</h2>
-            <p className="mx-auto mt-4 max-w-xl text-base leading-7 text-slate-500">Get our latest free sports predictions and match analysis.</p>
+          <div className="mb-6 text-center">
+            <h2 className="text-3xl font-black tracking-[-0.045em] text-slate-950 sm:text-5xl">Free Tips &amp; Predictions</h2>
           </div>
           <PredictionBoard days={days} />
         </div>
@@ -84,21 +79,19 @@ export default async function HomePage({ searchParams }: { searchParams: Promise
       <section className="bg-white px-5 py-12 sm:px-8 sm:py-16">
         <div className="mx-auto max-w-7xl">
           <div className="text-center">
-            <p className="text-xs font-black uppercase tracking-[0.16em] text-emerald-600">Why Choose Tips Deck?</p>
-            <h2 className="mt-3 text-3xl font-black tracking-[-0.045em] text-slate-950 sm:text-5xl">Sports insight you can verify</h2>
-            <p className="mx-auto mt-4 max-w-2xl text-base leading-7 text-slate-500">Every published tip is tied to a real fixture and remains on our record after the match settles.</p>
+            <h2 className="text-3xl font-black tracking-[-0.045em] text-slate-950 sm:text-5xl">Sports insight you can verify</h2>
           </div>
 
-          <div className="mt-12 grid gap-5 md:grid-cols-3">
+          <div className="mt-6 grid gap-3 md:grid-cols-3">
             {[
               ["01", "Clear analysis", "Understand the market, selection and reasoning behind every available pick."],
               ["02", "Visible results", "Review completed predictions without deleted losses or invented performance claims."],
               ["03", "Free and VIP Decks", "Start with daily free tips, then choose premium access only when it suits you."],
             ].map(([number, title, copy]) => (
-              <article key={number} className="rounded-2xl border border-slate-200 p-7 shadow-[0_10px_30px_rgba(15,23,42,0.04)]">
-                <span className="grid size-10 place-items-center rounded-xl bg-emerald-50 text-xs font-black text-emerald-700">{number}</span>
-                <h3 className="mt-6 text-xl font-black text-slate-950">{title}</h3>
-                <p className="mt-3 text-sm leading-6 text-slate-500">{copy}</p>
+              <article key={number} className="rounded-xl border border-slate-200 p-5 shadow-[0_8px_22px_rgba(15,23,42,0.04)]">
+                <span className="grid size-8 place-items-center rounded-lg bg-emerald-50 text-[0.68rem] font-black text-emerald-700">{number}</span>
+                <h3 className="mt-4 text-lg font-black text-slate-950">{title}</h3>
+                <p className="mt-2 text-sm leading-5 text-slate-500">{copy}</p>
               </article>
             ))}
           </div>
@@ -114,8 +107,7 @@ export default async function HomePage({ searchParams }: { searchParams: Promise
       <section className="bg-lime-300 px-5 py-12 sm:px-8 sm:py-14">
         <div className="mx-auto flex max-w-5xl flex-col items-center text-center">
           <h2 className="text-3xl font-black tracking-[-0.045em] text-emerald-950 sm:text-5xl">Ready to Get Started?</h2>
-          <p className="mt-4 max-w-xl text-base leading-7 text-emerald-950/68">Join Tips Deck today and get access to our premium sports tips and predictions.</p>
-          <Link href="/register" className="mt-7 inline-flex min-h-12 items-center justify-center rounded-xl bg-emerald-950 px-7 text-sm font-black text-white hover:bg-emerald-800">Get Started</Link>
+          <Link href="/register" className="mt-5 inline-flex min-h-12 items-center justify-center rounded-xl bg-emerald-950 px-7 text-sm font-black text-white hover:bg-emerald-800">Get Started</Link>
         </div>
       </section>
 

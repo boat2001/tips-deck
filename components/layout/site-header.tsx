@@ -32,7 +32,19 @@ export async function SiteHeader() {
           {user ? <><Link href="/account" className="px-2 py-2 text-sm font-extrabold text-slate-600 hover:text-emerald-700">Settings</Link>{isAdmin && <Link href="/admin" className="px-2 py-2 text-sm font-extrabold text-emerald-700">Admin</Link>}<form action={logoutAction}><button className="rounded-xl bg-[#078a4f] px-4 py-2.5 text-sm font-extrabold text-white hover:bg-emerald-700">Logout</button></form></> : <><Link href="/login" className="px-2 py-2 text-sm font-extrabold text-slate-600 hover:text-emerald-700">Login</Link><Link href="/register" className="rounded-xl bg-[#078a4f] px-4 py-2.5 text-sm font-extrabold text-white hover:bg-emerald-700">Register</Link></>}
         </div>
 
-        <MobileNavigation authenticated={Boolean(user)} admin={isAdmin} />
+        <div className="flex items-center gap-2 md:hidden">
+          <Link
+            href={user ? "/account" : "/login"}
+            aria-label={user ? "Open user account" : "Log in to your account"}
+            className={`grid size-10 place-items-center rounded-xl border transition focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-600 ${user ? "border-emerald-200 bg-emerald-50 text-emerald-700" : "border-slate-200 bg-white text-slate-700 hover:border-emerald-300 hover:text-emerald-700"}`}
+          >
+            <svg aria-hidden="true" viewBox="0 0 24 24" className="size-5 fill-none stroke-current stroke-2">
+              <circle cx="12" cy="8" r="3.5" />
+              <path d="M5.5 20c.5-4 2.7-6 6.5-6s6 2 6.5 6" />
+            </svg>
+          </Link>
+          <MobileNavigation authenticated={Boolean(user)} admin={isAdmin} />
+        </div>
       </div>
     </header>
   );

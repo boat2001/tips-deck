@@ -15,8 +15,7 @@ export function BookingSection({ bookings, date }: { bookings: Booking[]; date: 
         </summary>
         <div className="p-5 sm:p-7">
           <div className="text-center">
-            <p className="text-xs font-black uppercase tracking-[0.14em] text-emerald-600">Booking codes</p>
-            <h2 className="mt-2 text-2xl font-black text-slate-950">Codes for {new Date(`${date}T12:00:00.000Z`).toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric", timeZone: "UTC" })}</h2>
+            <h2 className="text-2xl font-black text-slate-950">Codes for {new Date(`${date}T12:00:00.000Z`).toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric", timeZone: "UTC" })}</h2>
           </div>
           {bookings.length ? (
             <div className="mx-auto mt-6 grid max-w-3xl gap-4 sm:grid-cols-2">

@@ -18,7 +18,7 @@ export default async function PredictionsPage({ searchParams }: { searchParams: 
   return (
     <div className="bg-[#f7f9f8] px-5 py-14 sm:px-8 sm:py-20">
       <div className="mx-auto max-w-5xl">
-        <div className="mb-10 text-center"><p className="text-xs font-black uppercase tracking-[0.16em] text-emerald-600">Daily sports tips</p><h1 className="mt-3 text-4xl font-black tracking-[-0.05em] text-slate-950 sm:text-6xl">Sports Tips &amp; Predictions</h1><p className="mx-auto mt-4 max-w-2xl text-base leading-7 text-slate-500">Browse yesterday&apos;s results, today&apos;s betting tips and tomorrow&apos;s upcoming predictions.</p></div>
+        <div className="mb-6 text-center"><h1 className="text-2xl font-black tracking-[-0.04em] text-slate-950 sm:text-4xl">Sports Tips &amp; Predictions</h1></div>
         <PredictionBoard days={days} bookingsByDate={bookingsByDate} />
       </div>
     </div>

@@ -21,8 +21,7 @@ export default async function AccountPage({ searchParams }: { searchParams: Prom
     <main className="bg-[#f7f9f8] px-5 py-12 sm:px-8 sm:py-16">
       <div className="mx-auto grid max-w-4xl gap-6 md:grid-cols-[0.8fr_1.2fr]">
         <section className="rounded-2xl bg-[#063f2c] p-7 text-white">
-          <p className="text-xs font-black uppercase tracking-[0.14em] text-lime-300">Account Settings</p>
-          <h1 className="mt-3 text-3xl font-black">{user.displayName || user.username}</h1>
+          <h1 className="text-3xl font-black">{user.displayName || user.username}</h1>
           <p className="mt-2 text-sm text-emerald-50/70">@{user.username}</p>
           <dl className="mt-8 space-y-4 text-sm"><div><dt className="text-emerald-100/55">Membership</dt><dd className="mt-1 font-black">{premiumAccess.allPremium || premiumAccess.deckIds.length > 0 ? "VIP access" : "Free member"}</dd></div><div><dt className="text-emerald-100/55">Role</dt><dd className="mt-1 font-black">{user.role.replaceAll("_", " ")}</dd></div></dl>
           {isAdmin && <Link href="/admin" className="mt-7 inline-flex rounded-xl bg-lime-300 px-4 py-3 text-sm font-black text-emerald-950">Open Admin Control Panel</Link>}

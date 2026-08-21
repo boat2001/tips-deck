@@ -30,7 +30,7 @@ export default function PublicLayout({ children }: Readonly<{ children: React.Re
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData).replaceAll("<", "\\u003c") }} />
       <SiteHeader />
-      <main className="pt-18">{children}</main>
+      <main className="public-content pt-18">{children}</main>
       <SiteFooter />
     </>
   );

@@ -96,18 +96,13 @@ The homepage build does not query the database, so it can be previewed before Po
 
 Never commit `.env` files or expose `DATABASE_URL` to browser code.
 
-## Cloudflare Workers deployment
+## Vercel deployment
 
-This project uses the OpenNext adapter and must be deployed as a Worker, not as a static Pages export.
+Import the GitHub repository into Vercel with the **Next.js** framework preset. Keep the default install and build commands and use Node.js 22, which is pinned in `package.json`.
 
-For a Cloudflare Git-connected Worker, configure **Settings → Build** with:
+Add the variables listed above under **Project Settings → Environment Variables**. Production requires `DATABASE_URL`, `NEXT_PUBLIC_APP_URL=https://tips-deck.com`, `APP_ENV=production`, `CRON_SECRET`, and `PAYSTACK_SECRET_KEY` when live checkout is enabled. Use a pooled PostgreSQL URL for application traffic.
 
-- Build command: leave blank
-- Deploy command: `npm run deploy`
-- Non-production deploy command: `npm run upload`
-- Root directory: `/`
-
-Add the runtime variables and secrets listed above under **Settings → Variables & Secrets**. At minimum, production requires `DATABASE_URL`, `NEXT_PUBLIC_APP_URL`, `APP_ENV`, and `CRON_SECRET`. Run `npm run preview` to test the Workers runtime locally on Linux or WSL.
+Apply database migrations separately with `npm run db:deploy` before promoting a deployment that introduces schema changes. `vercel.json` invokes fixture synchronization at 02:00 UTC and subscription/payment expiration at 03:00 UTC each day; Vercel automatically sends `CRON_SECRET` as its Bearer authorization value.
 
 ## Quality checks
 

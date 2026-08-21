@@ -11,7 +11,7 @@ function authorized(request: Request) {
   return left.length === right.length && timingSafeEqual(left, right);
 }
 
-export async function POST(request: Request) {
+async function handleExpiration(request: Request) {
   if (!authorized(request)) return Response.json({ error: "Unauthorized" }, { status: 401 });
   const [subscriptions, payments] = await Promise.all([
     getDatabase().subscription.updateMany({ where: { status: "ACTIVE", expiresAt: { lte: new Date() } }, data: { status: "EXPIRED" } }),
@@ -19,3 +19,6 @@ export async function POST(request: Request) {
   ]);
   return Response.json({ expiredSubscriptions: subscriptions.count, cancelledPayments: payments.count });
 }
+
+export const GET = handleExpiration;
+export const POST = handleExpiration;

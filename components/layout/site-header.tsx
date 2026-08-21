@@ -9,8 +9,8 @@ import { siteConfig } from "@/lib/config/site";
 const navigation = [
   { label: "Home", href: "/" },
   { label: "Predictions", href: "/predictions" },
-  { label: "About Us", href: "/about" },
   { label: "VIP Plans", href: "/vip" },
+  { label: "About Us", href: "/about" },
 ] as const;
 
 export async function SiteHeader() {

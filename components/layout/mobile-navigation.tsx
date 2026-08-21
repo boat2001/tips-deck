@@ -7,8 +7,8 @@ import { logoutAction } from "@/app/(public)/auth-actions";
 const publicItems = [
   { label: "Home", href: "/" },
   { label: "Predictions", href: "/predictions" },
-  { label: "About Us", href: "/about" },
   { label: "VIP Plans", href: "/vip" },
+  { label: "About Us", href: "/about" },
 ] as const;
 
 export function MobileNavigation({ authenticated, admin }: { authenticated: boolean; admin: boolean }) {

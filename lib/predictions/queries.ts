@@ -103,6 +103,7 @@ export async function getPublicPredictionsByDate(
   const where = {
     status: "PUBLISHED" as const,
     fixture: { kickoffAt: { gte: start, lt: end } },
+    OR: [{ bookingId: null }, { booking: { isActive: true } }],
   };
 
   const freePredictions = await database.prediction.findMany({
@@ -145,8 +146,8 @@ export async function getPredictionDayBoard(reference = new Date(), premiumAcces
 }
 
 export async function getPublicPredictionBySlug(slug: string, premiumAccess: PremiumAccess = false) {
-  const prediction = await getDatabase().prediction.findUnique({
-    where: { slug, status: "PUBLISHED" },
+  const prediction = await getDatabase().prediction.findFirst({
+    where: { slug, status: "PUBLISHED", OR: [{ bookingId: null }, { booking: { isActive: true } }] },
     select: {
       id: true,
       slug: true,
@@ -195,6 +196,7 @@ export async function getVipHistoryByDate(date: string) {
         where: {
           status: "PUBLISHED",
           visibility: "PREMIUM",
+          OR: [{ bookingId: null }, { booking: { isActive: true } }],
           fixture: { kickoffAt: { gte: start, lt: end } },
         },
         select: {
@@ -229,7 +231,7 @@ export async function getVipHistoryByDate(date: string) {
 
 export async function getPublishedPredictionSitemapRows() {
   return getDatabase().prediction.findMany({
-    where: { status: "PUBLISHED" },
+    where: { status: "PUBLISHED", OR: [{ bookingId: null }, { booking: { isActive: true } }] },
     select: { slug: true, updatedAt: true },
     orderBy: { updatedAt: "desc" },
   });

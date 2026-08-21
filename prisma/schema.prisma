@@ -82,6 +82,13 @@ enum SubscriptionStatus {
   CANCELLED
 }
 
+enum SlipCategory {
+  FREE
+  VIP1
+  VIP2
+  VIP3
+}
+
 model League {
   id         String    @id @default(cuid())
   externalId String    @unique
@@ -174,9 +181,11 @@ model Prediction {
   result      PredictionResult        @default(PENDING)
   publishAt   DateTime?
   createdById String
+  bookingId   String?
   fixture     Fixture                 @relation(fields: [fixtureId], references: [id], onDelete: Restrict)
   deck        Deck?                   @relation(fields: [deckId], references: [id], onDelete: SetNull)
   createdBy   User                     @relation(fields: [createdById], references: [id], onDelete: Restrict)
+  booking     Booking?                  @relation(fields: [bookingId], references: [id], onDelete: Cascade)
   createdAt   DateTime                @default(now())
   updatedAt   DateTime                @updatedAt
 
@@ -184,6 +193,7 @@ model Prediction {
   @@index([deckId, status])
   @@index([status, publishAt])
   @@index([visibility, status])
+  @@index([bookingId])
   @@map("predictions")
 }
 
@@ -241,14 +251,20 @@ model Booking {
   id          String   @id @default(cuid())
   title       String   @default("Booking Code")
   platform    String
-  code        String
+  code        String   @unique
+  category    SlipCategory @default(FREE)
+  shareUrl    String?
+  totalOdds   Decimal? @db.Decimal(12, 2)
+  deadline    DateTime?
   bookingDate DateTime @db.Date
   isActive    Boolean  @default(true)
   sortOrder   Int      @default(0)
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
+  predictions Prediction[]
 
   @@index([bookingDate, isActive, sortOrder])
+  @@index([category, bookingDate, isActive])
   @@map("bookings")
 }
 

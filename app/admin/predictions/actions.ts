@@ -44,6 +44,7 @@ export async function createPrediction(formData: FormData) {
   await recordAudit({ actorId: user.id, action: "PREDICTION_CREATED", entityType: "Prediction", entityId: slug });
   revalidatePath("/");
   revalidatePath("/predictions");
+  revalidatePath("/admin/bookings");
   redirect("/admin/predictions");
 }
 
@@ -62,6 +63,7 @@ export async function updatePrediction(formData: FormData) {
   await recordAudit({ actorId: user.id, action: "PREDICTION_UPDATED", entityType: "Prediction", entityId: id });
   revalidatePath("/");
   revalidatePath("/predictions");
+  revalidatePath("/admin/bookings");
   redirect("/admin/predictions");
 }
 
@@ -109,5 +111,5 @@ export async function updatePredictionResult(formData: FormData) {
   const result = z.enum(["PENDING", "WON", "LOST", "VOID", "PUSH", "CANCELLED"]).parse(formData.get("result"));
   const prediction = await getDatabase().prediction.update({ where: { id }, data: { result }, select: { id: true, slug: true } });
   await recordAudit({ actorId: user.id, action: "PREDICTION_RESULT_UPDATED", entityType: "Prediction", entityId: prediction.id, metadata: { result, slug: prediction.slug } });
-  revalidatePath("/"); revalidatePath("/predictions"); revalidatePath("/admin/results"); revalidatePath(`/predictions/${prediction.slug}`);
+  revalidatePath("/"); revalidatePath("/predictions"); revalidatePath("/admin/results"); revalidatePath("/admin/bookings"); revalidatePath(`/predictions/${prediction.slug}`);
 }

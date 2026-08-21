@@ -14,7 +14,7 @@ export async function initializeCheckoutAction(_state: CheckoutState, formData: 
   const user = await requireUser();
   const planId = z.string().min(1).parse(formData.get("planId"));
   if (!process.env.PAYSTACK_SECRET_KEY) return { error: "Online payment is not configured yet. Please contact support." };
-  const plan = await getDatabase().plan.findFirst({ where: { id: planId, isActive: true } });
+  const plan = await getDatabase().plan.findFirst({ where: { id: planId, isActive: true, isSoldOut: false } });
   if (!plan || plan.priceMinor <= 0 || !["GHS"].includes(plan.currency)) return { error: "This VIP plan is currently unavailable." };
   if (plan.scope === "DECK" && !plan.deckId) return { error: "This Deck plan is not configured correctly." };
   const recent = await getDatabase().payment.count({ where: { userId: user.id, createdAt: { gte: new Date(Date.now() - 10 * 60 * 1000) } } });

@@ -7,7 +7,7 @@ import { useEffect, useState } from "react";
 import { logoutAction } from "@/app/(public)/auth-actions";
 
 const navigation = [
-  ["Overview", "/admin", "OV"], ["Tips", "/admin/fixtures", "TP"], ["Predictions", "/admin/predictions", "PR"], ["Results", "/admin/results", "RS"], ["Decks", "/admin/decks", "DK"], ["VIP Plans", "/admin/plans", "VP"], ["Payments", "/admin/payments", "PY"], ["Subscriptions", "/admin/subscriptions", "SB"], ["Users", "/admin/users", "US"], ["Settings", "/admin/settings", "ST"],
+  ["Overview", "/admin", "OV"], ["Tips", "/admin/fixtures", "TP"], ["Predictions", "/admin/predictions", "PR"], ["Bookings", "/admin/bookings", "BK"], ["Results", "/admin/results", "RS"], ["Decks", "/admin/decks", "DK"], ["VIP Plans", "/admin/plans", "VP"], ["Payments", "/admin/payments", "PY"], ["Subscriptions", "/admin/subscriptions", "SB"], ["Users", "/admin/users", "US"], ["Settings", "/admin/settings", "ST"],
 ] as const;
 
 export function AdminShell({ children, displayName, role }: { children: React.ReactNode; displayName: string; role: string }) {

@@ -99,18 +99,18 @@ async function main() {
 
   await prisma.plan.upsert({
     where: { slug: "vip-day-pass" },
-    update: { name: "VIP 1", description: "One-day access to carefully selected VIP 1 sports predictions.", priceMinor: 70000, currency: "GHS", durationDays: 1, scope: "DECK", deckId: vipDeck.id, sortOrder: 1, isActive: true },
-    create: { name: "VIP 1", slug: "vip-day-pass", description: "One-day access to carefully selected VIP 1 sports predictions.", priceMinor: 70000, currency: "GHS", durationDays: 1, scope: "DECK", deckId: vipDeck.id, sortOrder: 1 },
+    update: { name: "VIP 1", description: "One-day access to carefully selected VIP 1 sports predictions.", priceMinor: 3000, currency: "GHS", durationDays: 1, scope: "DECK", deckId: vipDeck.id, sortOrder: 1 },
+    create: { name: "VIP 1", slug: "vip-day-pass", description: "One-day access to carefully selected VIP 1 sports predictions.", priceMinor: 3000, currency: "GHS", durationDays: 1, scope: "DECK", deckId: vipDeck.id, sortOrder: 1 },
   });
   await prisma.plan.upsert({
     where: { slug: "vip-weekly" },
-    update: { name: "VIP 2", description: "One-day access to higher-value VIP 2 sports predictions.", priceMinor: 100000, currency: "GHS", durationDays: 1, scope: "DECK", deckId: vipTwoDeck.id, sortOrder: 2, isActive: true },
-    create: { name: "VIP 2", slug: "vip-weekly", description: "One-day access to higher-value VIP 2 sports predictions.", priceMinor: 100000, currency: "GHS", durationDays: 1, scope: "DECK", deckId: vipTwoDeck.id, sortOrder: 2 },
+    update: { name: "VIP 2", description: "One-day access to higher-value VIP 2 sports predictions.", priceMinor: 3000, currency: "GHS", durationDays: 1, scope: "DECK", deckId: vipTwoDeck.id, sortOrder: 2 },
+    create: { name: "VIP 2", slug: "vip-weekly", description: "One-day access to higher-value VIP 2 sports predictions.", priceMinor: 3000, currency: "GHS", durationDays: 1, scope: "DECK", deckId: vipTwoDeck.id, sortOrder: 2 },
   });
   await prisma.plan.upsert({
     where: { slug: "vip-monthly" },
-    update: { name: "VIP 3", description: "One-day access to our top-tier VIP 3 sports predictions.", priceMinor: 800000, currency: "GHS", durationDays: 1, scope: "DECK", deckId: vipThreeDeck.id, sortOrder: 3, isActive: true },
-    create: { name: "VIP 3", slug: "vip-monthly", description: "One-day access to our top-tier VIP 3 sports predictions.", priceMinor: 800000, currency: "GHS", durationDays: 1, scope: "DECK", deckId: vipThreeDeck.id, sortOrder: 3 },
+    update: { name: "VIP 3", description: "One-day access to our top-tier VIP 3 sports predictions.", priceMinor: 3000, currency: "GHS", durationDays: 1, scope: "DECK", deckId: vipThreeDeck.id, sortOrder: 3 },
+    create: { name: "VIP 3", slug: "vip-monthly", description: "One-day access to our top-tier VIP 3 sports predictions.", priceMinor: 3000, currency: "GHS", durationDays: 1, scope: "DECK", deckId: vipThreeDeck.id, sortOrder: 3 },
   });
 
   const todayFixtures = await prisma.fixture.findMany({

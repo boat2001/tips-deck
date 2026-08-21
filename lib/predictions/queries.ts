@@ -183,6 +183,50 @@ export async function getPublicPerformance() {
   };
 }
 
+export async function getVipHistoryByDate(date: string) {
+  const { start, end } = getUtcDayRange(date);
+  const decks = await getDatabase().deck.findMany({
+    where: { isPremium: true, isActive: true },
+    select: {
+      id: true,
+      name: true,
+      slug: true,
+      predictions: {
+        where: {
+          status: "PUBLISHED",
+          visibility: "PREMIUM",
+          fixture: { kickoffAt: { gte: start, lt: end } },
+        },
+        select: {
+          id: true,
+          slug: true,
+          market: true,
+          selection: true,
+          result: true,
+          fixture: { select: { kickoffAt: true, homeTeam: { select: { name: true } }, awayTeam: { select: { name: true } } } },
+        },
+        orderBy: { fixture: { kickoffAt: "asc" } },
+      },
+    },
+    orderBy: { sortOrder: "asc" },
+  });
+
+  return decks.map((deck) => ({
+    id: deck.id,
+    name: deck.name.replace(/\s+Deck$/i, ""),
+    slug: deck.slug,
+    predictions: deck.predictions.map((prediction) => ({
+      id: prediction.id,
+      slug: prediction.slug,
+      homeTeam: prediction.fixture.homeTeam.name,
+      awayTeam: prediction.fixture.awayTeam.name,
+      market: prediction.market,
+      selection: prediction.selection,
+      result: prediction.result,
+    })),
+  }));
+}
+
 export async function getPublishedPredictionSitemapRows() {
   return getDatabase().prediction.findMany({
     where: { status: "PUBLISHED" },

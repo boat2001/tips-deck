@@ -224,6 +224,7 @@ model Plan {
   scope         PlanScope      @default(ALL_PREMIUM)
   deckId        String?
   isActive      Boolean        @default(true)
+  isSoldOut     Boolean        @default(false)
   sortOrder     Int            @default(0)
   deck          Deck?          @relation(fields: [deckId], references: [id], onDelete: SetNull)
   payments      Payment[]
@@ -234,6 +235,21 @@ model Plan {
   @@index([isActive, sortOrder])
   @@index([deckId, isActive])
   @@map("plans")
+}
+
+model Booking {
+  id          String   @id @default(cuid())
+  title       String   @default("Booking Code")
+  platform    String
+  code        String
+  bookingDate DateTime @db.Date
+  isActive    Boolean  @default(true)
+  sortOrder   Int      @default(0)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([bookingDate, isActive, sortOrder])
+  @@map("bookings")
 }
 
 model Payment {

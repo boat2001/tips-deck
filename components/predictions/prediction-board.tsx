@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useMemo, useRef, useState } from "react";
+import { BookingSection } from "@/components/predictions/booking-section";
 import type { PublicPrediction } from "@/lib/predictions/queries";
 
 type DayBoard = {
@@ -35,7 +36,9 @@ function Result({ prediction }: { prediction: PublicPrediction }) {
   return <span className="text-xs font-bold text-slate-400">Pending</span>;
 }
 
-export function PredictionBoard({ days }: { days: DayBoard[] }) {
+type PublicBooking = { id: string; title: string; platform: string; code: string };
+
+export function PredictionBoard({ days, bookingsByDate }: { days: DayBoard[]; bookingsByDate?: Record<string, PublicBooking[]> }) {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
@@ -76,6 +79,7 @@ export function PredictionBoard({ days }: { days: DayBoard[] }) {
   }, [day.predictions, query]);
 
   return (
+    <>
     <div className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-[0_18px_50px_rgba(15,23,42,0.08)]">
       <div className="grid grid-cols-3 border-b border-slate-200 bg-slate-50 p-1.5 sm:p-2">
         {days.map((item) => (
@@ -148,5 +152,7 @@ export function PredictionBoard({ days }: { days: DayBoard[] }) {
         <Link href="/predictions" className="text-sm font-extrabold text-emerald-700 hover:text-emerald-900">View all predictions →</Link>
       </div>
     </div>
+    {bookingsByDate ? <BookingSection bookings={bookingsByDate[day.date] ?? []} date={day.date} /> : null}
+    </>
   );
 }

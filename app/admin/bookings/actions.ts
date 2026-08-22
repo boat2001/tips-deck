@@ -38,6 +38,8 @@ function refreshPublicContent() {
   revalidatePath("/predictions");
   revalidatePath("/vip");
   revalidatePath("/admin/bookings");
+  revalidatePath("/admin/games");
+  revalidatePath("/admin/games-control");
   revalidatePath("/admin/predictions");
   revalidatePath("/admin/results");
 }
@@ -186,5 +188,7 @@ export async function updateVipControl(formData: FormData) {
   invalidateVipData();
   revalidatePath("/vip");
   revalidatePath("/admin/bookings");
+  revalidatePath("/admin/games");
+  revalidatePath("/admin/games-control");
   revalidatePath("/admin/plans");
 }

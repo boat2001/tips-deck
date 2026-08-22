@@ -47,6 +47,7 @@ export async function createPrediction(formData: FormData) {
   revalidatePath("/");
   revalidatePath("/predictions");
   revalidatePath("/admin/bookings");
+  revalidatePath("/admin/games");
   redirect("/admin/predictions");
 }
 
@@ -67,7 +68,8 @@ export async function updatePrediction(formData: FormData) {
   revalidatePath("/");
   revalidatePath("/predictions");
   revalidatePath("/admin/bookings");
-  redirect("/admin/predictions");
+  revalidatePath("/admin/games");
+  redirect("/admin/games");
 }
 
 export async function togglePredictionPublication(formData: FormData) {
@@ -118,5 +120,5 @@ export async function updatePredictionResult(formData: FormData) {
   const prediction = await getDatabase().prediction.update({ where: { id }, data: { result }, select: { id: true, slug: true } });
   await recordAudit({ actorId: user.id, action: "PREDICTION_RESULT_UPDATED", entityType: "Prediction", entityId: prediction.id, metadata: { result, slug: prediction.slug } });
   invalidatePredictionData();
-  revalidatePath("/"); revalidatePath("/predictions"); revalidatePath("/admin/results"); revalidatePath("/admin/bookings"); revalidatePath(`/predictions/${prediction.slug}`);
+  revalidatePath("/"); revalidatePath("/predictions"); revalidatePath("/admin/results"); revalidatePath("/admin/bookings"); revalidatePath("/admin/games"); revalidatePath(`/predictions/${prediction.slug}`);
 }

@@ -51,17 +51,17 @@ export async function MemberDashboard({ user }: { user: CurrentUser }) {
         </header>
 
         <section className="grid grid-cols-3 border-x border-b border-slate-200 bg-white">
-          <article className="min-w-0 border-r border-slate-200 px-3 py-3.5 sm:px-5 sm:py-4">
+          <article className="flex min-w-0 flex-col items-center justify-center border-r border-slate-200 px-3 py-3.5 text-center sm:px-5 sm:py-4">
             <p className="text-[10px] font-bold uppercase tracking-wide text-slate-400 sm:text-xs">Tips today</p>
             <p className="mt-1 text-xl font-black leading-none text-slate-950 sm:text-2xl">{availableTips.length}</p>
             <p className="mt-1.5 text-[11px] leading-tight text-slate-500 sm:text-xs">Available predictions</p>
           </article>
-          <article className="min-w-0 border-r border-slate-200 px-3 py-3.5 sm:px-5 sm:py-4">
+          <article className="flex min-w-0 flex-col items-center justify-center border-r border-slate-200 px-3 py-3.5 text-center sm:px-5 sm:py-4">
             <p className="text-[10px] font-bold uppercase tracking-wide text-slate-400 sm:text-xs">VIP access</p>
             <p className="mt-1 text-xl font-black leading-none text-slate-950 sm:text-2xl">{overview.activeSubscriptions.length || (isStaff ? "All" : 0)}</p>
             <p className="mt-1.5 text-[11px] leading-tight text-slate-500 sm:text-xs">Active {overview.activeSubscriptions.length === 1 ? "plan" : "plans"}</p>
           </article>
-          <article className="min-w-0 px-3 py-3.5 sm:px-5 sm:py-4">
+          <article className="flex min-w-0 flex-col items-center justify-center px-3 py-3.5 text-center sm:px-5 sm:py-4">
             <p className="text-[10px] font-bold uppercase tracking-wide text-slate-400 sm:text-xs">Payments</p>
             <p className="mt-1 text-xl font-black leading-none text-slate-950 sm:text-2xl">{overview.paymentCount}</p>
             <p className="mt-1.5 text-[11px] leading-tight text-slate-500 sm:text-xs">Completed and pending</p>

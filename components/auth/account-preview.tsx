@@ -13,7 +13,7 @@ export function AccountPreview({ mode, next = "/dashboard" }: { mode: "login" | 
   const [state, action, pending] = useActionState(register ? registerAction : loginAction, initialState);
 
   return (
-    <main className="bg-[#f7f9f8] px-5 py-8 sm:px-8 sm:py-12">
+    <main className="bg-[#f7f9f8] px-5 pb-8 pt-4 sm:px-8 sm:pb-12 sm:pt-6">
       <div className="mx-auto w-full min-w-0 max-w-md rounded-2xl border border-slate-200 bg-white p-7 shadow-[0_18px_50px_rgba(15,23,42,0.08)] sm:p-9">
         <Link href="/" aria-label="Tips Deck home" className="mx-auto flex w-fit justify-center rounded-lg focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-emerald-600">
           <Image src="/brand/tips-deck-lockup.png" alt="Tips Deck" width={180} height={78} priority className="h-16 w-auto object-contain" />

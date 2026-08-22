@@ -2,7 +2,7 @@ import { LoadingStatus, Skeleton } from "@/components/ui/skeleton";
 
 export default function PublicLoading() {
   return (
-    <div className="min-h-[65vh] bg-[#f7f9f8] px-5 py-10 sm:px-8 sm:py-14">
+    <div className="min-h-[65vh] bg-[#f7f9f8] px-5 pb-10 pt-5 sm:px-8 sm:pb-14 sm:pt-7">
       <LoadingStatus />
       <div className="mx-auto max-w-6xl">
         <div className="border-b border-slate-200 pb-7"><Skeleton className="h-9 w-52 rounded-lg" /><Skeleton className="mt-3 h-4 w-full max-w-md rounded" /></div>

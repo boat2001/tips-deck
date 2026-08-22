@@ -37,7 +37,7 @@ export async function MemberDashboard({ user }: { user: CurrentUser }) {
   const isStaff = adminRoles.includes(user.role as (typeof adminRoles)[number]);
 
   return (
-    <main className="min-h-[calc(100vh-4.5rem)] bg-[#f7f9f8] px-5 py-10 sm:px-8 sm:py-14">
+    <main className="min-h-[calc(100vh-4.5rem)] bg-[#f7f9f8] px-5 pb-10 pt-5 sm:px-8 sm:pb-14 sm:pt-7">
       <div className="mx-auto max-w-6xl">
         <header className="flex flex-col gap-5 border-b border-slate-200 pb-7 sm:flex-row sm:items-end sm:justify-between">
           <div>

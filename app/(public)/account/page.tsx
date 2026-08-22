@@ -18,7 +18,7 @@ export default async function AccountPage({ searchParams }: { searchParams: Prom
   const { error } = await searchParams;
   const isAdmin = adminRoles.includes(user.role as (typeof adminRoles)[number]);
   return (
-    <main className="bg-[#f7f9f8] px-5 py-12 sm:px-8 sm:py-16">
+    <main className="bg-[#f7f9f8] px-5 pb-12 pt-6 sm:px-8 sm:pb-16 sm:pt-8">
       <div className="mx-auto grid max-w-4xl gap-6 md:grid-cols-[0.8fr_1.2fr]">
         <section className="rounded-xl border border-slate-200 border-t-4 border-t-emerald-600 bg-white p-7">
           <p className="text-xs font-black uppercase tracking-[0.12em] text-emerald-700">Settings</p>

@@ -29,7 +29,7 @@ export default async function PredictionDetailPage({ params }: { params: Promise
   const kickoff = new Intl.DateTimeFormat("en-GB", { dateStyle: "full", timeStyle: "short", timeZone: "UTC" }).format(new Date(prediction.kickoffAt));
 
   return (
-    <main className="bg-[#f7f9f8] px-5 py-14 sm:px-8 sm:py-20">
+    <main className="bg-[#f7f9f8] px-5 pb-14 pt-7 sm:px-8 sm:pb-20 sm:pt-10">
       <article className="mx-auto max-w-3xl overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-[0_18px_50px_rgba(15,23,42,0.08)]">
         <div className="bg-[#063f2c] px-6 py-8 text-white sm:px-10">
           <div className="flex flex-wrap items-center justify-between gap-3"><p className="text-xs font-black uppercase tracking-[0.14em] text-lime-300">{prediction.league}</p><span className={`rounded-full px-3 py-1 text-[0.65rem] font-black ${prediction.visibility === "FREE" ? "bg-white/12 text-white" : "bg-amber-400 text-amber-950"}`}>{prediction.visibility} PICK</span></div>

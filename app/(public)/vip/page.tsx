@@ -38,7 +38,7 @@ export default async function VipPage({ searchParams }: { searchParams: Promise<
   const configured = Boolean(process.env.PAYSTACK_SECRET_KEY);
 
   return (
-    <main className="bg-[#f7f9f8] px-5 py-16 sm:px-8 sm:py-20">
+    <main className="bg-[#f7f9f8] px-5 pb-16 pt-8 sm:px-8 sm:pb-20 sm:pt-10">
       <div className="mx-auto max-w-5xl">
         <div className="text-center"><h1 className="text-2xl font-black tracking-[-0.04em] text-slate-950 sm:text-4xl">VIP Plans</h1><p className="mt-2 text-sm text-slate-500">Choose a plan to access premium tips and match analysis.</p></div>
         {user && <div className="mt-7 flex flex-col gap-3 rounded-xl border border-slate-200 bg-white px-5 py-4 text-left sm:flex-row sm:items-center sm:justify-between"><div><p className="text-xs font-black uppercase tracking-wide text-slate-400">Account status</p><p className="mt-1 text-sm font-black text-slate-800">{activeSubscriptions.length ? `${activeSubscriptions.length} active VIP ${activeSubscriptions.length === 1 ? "plan" : "plans"}` : "Free account"}</p></div><div className="flex gap-4"><Link href="/dashboard" className="text-sm font-black text-emerald-700">Dashboard</Link><Link href="/activity" className="text-sm font-black text-emerald-700">Activity</Link></div></div>}

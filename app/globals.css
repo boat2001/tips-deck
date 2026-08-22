@@ -103,7 +103,7 @@ summary::-webkit-details-marker {
 /* Keep every admin page heading close to the sticky toolbar. Page-level
    utilities still control the side and bottom spacing. */
 .admin-content > main {
-  padding-top: 1rem !important;
+  padding-top: 0.5rem !important;
 }
 
 @media (min-width: 640px) {

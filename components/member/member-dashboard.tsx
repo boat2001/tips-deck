@@ -50,10 +50,22 @@ export async function MemberDashboard({ user }: { user: CurrentUser }) {
           </div>
         </header>
 
-        <section className="grid border-x border-b border-slate-200 bg-white sm:grid-cols-3">
-          <article className="border-b border-slate-200 p-5 sm:border-b-0 sm:border-r"><p className="text-xs font-bold uppercase tracking-wide text-slate-400">Tips today</p><p className="mt-2 text-2xl font-black text-slate-950">{availableTips.length}</p><p className="mt-1 text-xs text-slate-500">Available predictions</p></article>
-          <article className="border-b border-slate-200 p-5 sm:border-b-0 sm:border-r"><p className="text-xs font-bold uppercase tracking-wide text-slate-400">VIP access</p><p className="mt-2 text-2xl font-black text-slate-950">{overview.activeSubscriptions.length || (isStaff ? "All" : 0)}</p><p className="mt-1 text-xs text-slate-500">Active {overview.activeSubscriptions.length === 1 ? "plan" : "plans"}</p></article>
-          <article className="p-5"><p className="text-xs font-bold uppercase tracking-wide text-slate-400">Payments</p><p className="mt-2 text-2xl font-black text-slate-950">{overview.paymentCount}</p><p className="mt-1 text-xs text-slate-500">Completed and pending</p></article>
+        <section className="grid grid-cols-3 border-x border-b border-slate-200 bg-white">
+          <article className="min-w-0 border-r border-slate-200 px-3 py-3.5 sm:px-5 sm:py-4">
+            <p className="text-[10px] font-bold uppercase tracking-wide text-slate-400 sm:text-xs">Tips today</p>
+            <p className="mt-1 text-xl font-black leading-none text-slate-950 sm:text-2xl">{availableTips.length}</p>
+            <p className="mt-1.5 text-[11px] leading-tight text-slate-500 sm:text-xs">Available predictions</p>
+          </article>
+          <article className="min-w-0 border-r border-slate-200 px-3 py-3.5 sm:px-5 sm:py-4">
+            <p className="text-[10px] font-bold uppercase tracking-wide text-slate-400 sm:text-xs">VIP access</p>
+            <p className="mt-1 text-xl font-black leading-none text-slate-950 sm:text-2xl">{overview.activeSubscriptions.length || (isStaff ? "All" : 0)}</p>
+            <p className="mt-1.5 text-[11px] leading-tight text-slate-500 sm:text-xs">Active {overview.activeSubscriptions.length === 1 ? "plan" : "plans"}</p>
+          </article>
+          <article className="min-w-0 px-3 py-3.5 sm:px-5 sm:py-4">
+            <p className="text-[10px] font-bold uppercase tracking-wide text-slate-400 sm:text-xs">Payments</p>
+            <p className="mt-1 text-xl font-black leading-none text-slate-950 sm:text-2xl">{overview.paymentCount}</p>
+            <p className="mt-1.5 text-[11px] leading-tight text-slate-500 sm:text-xs">Completed and pending</p>
+          </article>
         </section>
 
         <div className="mt-7 grid gap-6 lg:grid-cols-[minmax(0,1fr)_18rem]">

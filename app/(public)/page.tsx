@@ -1,4 +1,4 @@
-import Image from "next/image";
+import { getImageProps } from "next/image";
 import Link from "next/link";
 import { PredictionBoard } from "@/components/predictions/prediction-board";
 import { fromDateKey, getFixtureDateWindows } from "@/lib/football/dates";
@@ -37,10 +37,32 @@ export default async function HomePage({ searchParams }: { searchParams: Promise
     // The marketing page remains available while a local database is starting.
   }
 
+  const { props: { srcSet: desktopHeroSrcSet } } = getImageProps({
+    src: "/brand/hero-stadium-hd.png",
+    alt: "",
+    width: 1659,
+    height: 948,
+    quality: 90,
+    sizes: "100vw",
+  });
+  const { props: mobileHeroProps } = getImageProps({
+    src: "/brand/hero-mobile-hd.png",
+    alt: "Football player running in a stadium",
+    width: 1015,
+    height: 1549,
+    quality: 90,
+    sizes: "100vw",
+    loading: "eager",
+    fetchPriority: "high",
+  });
+
   return (
     <>
       <section className="relative isolate overflow-hidden bg-[#032d20] text-white">
-        <Image src="/brand/hero-stadium-hd.png" alt="Sports players in a stadium" fill priority quality={90} sizes="100vw" className="-z-20 object-cover object-[78%_center] sm:object-center" />
+        <picture>
+          <source media="(min-width: 640px)" srcSet={desktopHeroSrcSet} />
+          <img {...mobileHeroProps} className="absolute inset-0 -z-20 size-full object-cover object-center" />
+        </picture>
         <div className="absolute inset-0 -z-10 bg-[linear-gradient(90deg,rgba(1,34,24,0.96)_0%,rgba(1,34,24,0.82)_42%,rgba(1,34,24,0.38)_72%,rgba(1,34,24,0.24)_100%)]" aria-hidden="true" />
         <div className="absolute inset-0 -z-10 bg-gradient-to-t from-[#032d20]/75 via-transparent to-[#032d20]/30" aria-hidden="true" />
         <div className="relative mx-auto flex min-h-[32rem] max-w-7xl items-center px-5 py-10 sm:min-h-[34rem] sm:px-8 sm:py-12 lg:min-h-[36rem]">

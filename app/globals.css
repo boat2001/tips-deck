@@ -67,6 +67,27 @@ summary::-webkit-details-marker {
   display: none;
 }
 
+.skeleton-shimmer {
+  position: relative;
+  overflow: hidden;
+  background: #e2e8f0;
+}
+
+.skeleton-shimmer::after {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, transparent, rgb(255 255 255 / 0.72), transparent);
+  content: "";
+  transform: translateX(-100%);
+  animation: skeleton-shimmer 1.45s ease-in-out infinite;
+}
+
+@keyframes skeleton-shimmer {
+  100% {
+    transform: translateX(100%);
+  }
+}
+
 .public-content h1:not(.display-heading),
 .admin-content h1:not(.display-heading) {
   font-size: 1.5rem !important;
@@ -97,5 +118,9 @@ summary::-webkit-details-marker {
   *::after {
     scroll-behavior: auto !important;
     transition-duration: 0.01ms !important;
+  }
+
+  .skeleton-shimmer::after {
+    animation: none;
   }
 }

@@ -58,12 +58,12 @@ export function MobileNavigation({ authenticated, admin }: { authenticated: bool
         aria-expanded={isOpen}
         aria-controls="mobile-navigation"
         onClick={() => setIsOpen((open) => !open)}
-        className="grid size-10 place-items-center rounded-xl border border-slate-200 bg-white transition hover:border-slate-300 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-600"
+        className="grid size-11 place-items-center text-slate-800 transition hover:text-emerald-700 focus-visible:rounded-lg focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-emerald-600"
       >
-        <span className="relative block h-5 w-5" aria-hidden="true">
-          <i className={`absolute left-0 top-1 block h-0.5 w-5 bg-slate-800 transition ${isOpen ? "translate-y-1.5 rotate-45" : ""}`} />
-          <i className={`absolute left-0 top-[9px] block h-0.5 w-5 bg-slate-800 transition ${isOpen ? "opacity-0" : ""}`} />
-          <i className={`absolute left-0 top-[15px] block h-0.5 w-5 bg-slate-800 transition ${isOpen ? "-translate-y-1.5 -rotate-45" : ""}`} />
+        <span className="relative block h-6 w-7" aria-hidden="true">
+          <i className={`absolute left-0 top-0.5 block h-[3px] w-7 rounded-full bg-current transition ${isOpen ? "translate-y-[9px] rotate-45" : ""}`} />
+          <i className={`absolute left-0 top-[10px] block h-[3px] w-7 rounded-full bg-current transition ${isOpen ? "opacity-0" : ""}`} />
+          <i className={`absolute left-0 top-[19px] block h-[3px] w-7 rounded-full bg-current transition ${isOpen ? "-translate-y-[9px] -rotate-45" : ""}`} />
         </span>
       </button>
 

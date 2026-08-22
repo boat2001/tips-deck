@@ -85,8 +85,6 @@ The homepage build does not query the database, so it can be previewed before Po
 | `DATABASE_URL` | Server only | For database work | PostgreSQL connection string used by Prisma |
 | `NEXT_PUBLIC_APP_URL` | Public | Yes in deployment | Canonical application origin, for example `https://tips-deck.com` |
 | `GOOGLE_SITE_VERIFICATION` | Server | Optional | Google Search Console HTML-tag verification token |
-| `NEXT_PUBLIC_TELEGRAM_URL` | Public | Optional | Telegram channel invite used by the hero community button |
-| `NEXT_PUBLIC_WHATSAPP_URL` | Public | Optional | WhatsApp channel invite used by the hero community button |
 | `APP_ENV` | Server only | Optional | One of `development`, `test`, `staging`, or `production` |
 | `CRON_SECRET` | Server only | For fixture sync | Long random secret accepted as a Bearer token or `x-cron-secret` header |
 | `PAYSTACK_SECRET_KEY` | Server only | For live checkout | Paystack test or live secret key; never expose it to browser code |

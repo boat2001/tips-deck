@@ -13,6 +13,11 @@ export const siteConfig = {
   ],
 } as const;
 
+export const communityLinks = {
+  telegram: "https://t.me/+fSf79FiGlz05NDg0",
+  whatsapp: "https://wa.me/message/NBBEVPL4RCPTJ1",
+} as const;
+
 export function getSiteUrl() {
   return new URL(process.env.NEXT_PUBLIC_APP_URL ?? "http://localhost:3000");
 }

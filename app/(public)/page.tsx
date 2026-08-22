@@ -7,6 +7,7 @@ import { getCurrentUser } from "@/lib/auth/session";
 import { getPremiumAccessContext } from "@/lib/auth/authorization";
 import type { Metadata } from "next";
 import { MemberDashboard } from "@/components/member/member-dashboard";
+import { communityLinks } from "@/lib/config/site";
 
 export const metadata: Metadata = { alternates: { canonical: "/" } };
 
@@ -18,8 +19,7 @@ export default async function HomePage({ searchParams }: { searchParams: Promise
   const user = await getCurrentUser();
   if (user) return <MemberDashboard user={user} />;
   const premiumAccess = await getPremiumAccessContext(user);
-  const telegramUrl = process.env.NEXT_PUBLIC_TELEGRAM_URL ?? "https://t.me/+S6zQhRKDOV02YjJk";
-  const whatsappUrl = process.env.NEXT_PUBLIC_WHATSAPP_URL ?? "https://wa.me/?text=Join%20Tips%20Deck%20for%20daily%20sports%20predictions";
+  const { telegram: telegramUrl, whatsapp: whatsappUrl } = communityLinks;
   let days: Array<{ key: "yesterday" | "today" | "tomorrow"; label: string; date: string; predictions: PublicPrediction[] }> = getFixtureDateWindows(referenceDate).map((window) => ({
     key: window.key,
     label: window.label,

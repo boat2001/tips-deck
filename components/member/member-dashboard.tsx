@@ -3,6 +3,7 @@ import { ActivityList } from "@/components/member/activity-list";
 import { adminRoles } from "@/lib/auth/constants";
 import { getPremiumAccessContext } from "@/lib/auth/authorization";
 import type { getCurrentUser } from "@/lib/auth/session";
+import { communityLinks } from "@/lib/config/site";
 import { getMemberOverview } from "@/lib/member/queries";
 import { getPredictionDayBoard, type PublicPrediction } from "@/lib/predictions/queries";
 
@@ -28,8 +29,7 @@ function Result({ prediction }: { prediction: PublicPrediction }) {
 }
 
 export async function MemberDashboard({ user }: { user: CurrentUser }) {
-  const telegramUrl = process.env.NEXT_PUBLIC_TELEGRAM_URL ?? "https://t.me/+S6zQhRKDOV02YjJk";
-  const whatsappUrl = process.env.NEXT_PUBLIC_WHATSAPP_URL ?? "https://wa.me/?text=Join%20Tips%20Deck%20for%20daily%20sports%20predictions";
+  const { telegram: telegramUrl, whatsapp: whatsappUrl } = communityLinks;
   const access = await getPremiumAccessContext(user);
   const [overview, days] = await Promise.all([getMemberOverview(user.id), getPredictionDayBoard(new Date(), access)]);
   const today = days.find((day) => day.key === "today") ?? days[1];

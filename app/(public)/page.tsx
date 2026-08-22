@@ -94,10 +94,12 @@ export default async function HomePage({ searchParams }: { searchParams: Promise
               ["02", "Visible results", "Review completed predictions without deleted losses or invented performance claims."],
               ["03", "Free and VIP Decks", "Start with daily free tips, then choose premium access only when it suits you."],
             ].map(([number, title, copy]) => (
-              <article key={number} className="rounded-xl border border-slate-200 p-5 shadow-[0_8px_22px_rgba(15,23,42,0.04)]">
-                <span className="grid size-8 place-items-center rounded-lg bg-emerald-50 text-[0.68rem] font-black text-emerald-700">{number}</span>
-                <h3 className="mt-4 text-lg font-black text-slate-950">{title}</h3>
-                <p className="mt-2 text-sm leading-5 text-slate-500">{copy}</p>
+              <article key={number} className="rounded-xl border border-slate-200 p-4 shadow-[0_8px_22px_rgba(15,23,42,0.04)] sm:p-5">
+                <div className="flex items-center gap-3">
+                  <span className="grid size-8 shrink-0 place-items-center rounded-lg bg-emerald-50 text-[0.68rem] font-black text-emerald-700">{number}</span>
+                  <h3 className="text-lg font-black leading-tight text-slate-950">{title}</h3>
+                </div>
+                <p className="mt-3 text-sm leading-5 text-slate-500">{copy}</p>
               </article>
             ))}
           </div>

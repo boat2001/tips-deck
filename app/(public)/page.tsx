@@ -40,12 +40,15 @@ export default async function HomePage({ searchParams }: { searchParams: Promise
   return (
     <>
       <section className="relative isolate overflow-hidden bg-[#032d20] text-white">
-        <Image src="/brand/hero-stadium.png" alt="Sports players in a stadium" fill priority sizes="100vw" className="-z-20 object-cover object-[78%_center] sm:object-center" />
+        <Image src="/brand/hero-stadium-hd.png" alt="Sports players in a stadium" fill priority quality={90} sizes="100vw" className="-z-20 object-cover object-[78%_center] sm:object-center" />
         <div className="absolute inset-0 -z-10 bg-[linear-gradient(90deg,rgba(1,34,24,0.96)_0%,rgba(1,34,24,0.82)_42%,rgba(1,34,24,0.38)_72%,rgba(1,34,24,0.24)_100%)]" aria-hidden="true" />
         <div className="absolute inset-0 -z-10 bg-gradient-to-t from-[#032d20]/75 via-transparent to-[#032d20]/30" aria-hidden="true" />
         <div className="relative mx-auto flex min-h-[32rem] max-w-7xl items-center px-5 py-10 sm:min-h-[34rem] sm:px-8 sm:py-12 lg:min-h-[36rem]">
           <div className="max-w-4xl">
-            <h1 className="display-heading text-5xl font-black leading-[0.92] tracking-[-0.065em] sm:text-7xl lg:text-[5.5rem]">Smarter sports picks, every day.</h1>
+            <span className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/8 px-4 py-2 text-xs font-extrabold uppercase tracking-[0.12em] text-lime-300">
+              Your destination to win big 🎉
+            </span>
+            <h1 className="display-heading mt-5 text-5xl font-black leading-[0.92] tracking-[-0.065em] sm:text-7xl lg:text-[5.5rem]">Smarter sports picks, every day.</h1>
             <p className="mt-4 max-w-xl text-lg leading-8 text-emerald-50/72">Get free daily predictions, clear match analysis and premium selections from the Tips Deck sports desk.</p>
 
             <div className="mt-6 flex flex-wrap gap-3">

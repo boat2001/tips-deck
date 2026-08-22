@@ -3,9 +3,9 @@ import { redirect } from "next/navigation";
 import { adminRoles } from "@/lib/auth/constants";
 import { getCurrentUser } from "@/lib/auth/session";
 
-export async function requireUser() {
+export async function requireUser(destination = "/account") {
   const user = await getCurrentUser();
-  if (!user) redirect("/login?next=/account");
+  if (!user) redirect(`/login?next=${encodeURIComponent(destination)}`);
   return user;
 }
 

@@ -63,17 +63,7 @@ export default async function AdminFixturesPage({
 
   return (
     <main className="mx-auto max-w-7xl px-5 py-10 sm:px-8 sm:py-14">
-      <div className="grid gap-8 lg:grid-cols-[0.75fr_1.25fr] lg:items-end">
-        <div>
-          <p className="eyebrow">Admin · Sports data</p>
-          <h1 className="mt-3 text-4xl font-black tracking-[-0.055em] text-emerald-950 sm:text-6xl">
-            Tips desk
-          </h1>
-        </div>
-        <p className="max-w-2xl text-sm leading-6 text-emerald-950/60 lg:justify-self-end">
-          Browse locally synced matches and create sports tips. Kickoff times are shown in UTC and provider updates remain linked to each match.
-        </p>
-      </div>
+      <h1 className="text-4xl font-black tracking-[-0.055em] text-emerald-950 sm:text-6xl">Tips desk</h1>
 
       <section className="mt-10 overflow-hidden rounded-[2rem] border border-emerald-950/10 bg-white shadow-[0_24px_70px_rgba(6,78,59,0.08)]">
         <nav className="grid grid-cols-3 gap-1 border-b border-emerald-950/8 bg-[#fafbf5] p-2 sm:p-3" aria-label="Tips day">

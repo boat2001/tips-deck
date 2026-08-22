@@ -1,5 +1,9 @@
-import "dotenv/config";
+import { config } from "dotenv";
 import { defineConfig } from "prisma/config";
+
+// Match Next.js local environment precedence so Prisma commands and the app
+// cannot silently connect to different databases during development.
+config({ path: [".env.local", ".env"] });
 
 export default defineConfig({
   schema: "prisma/schema.prisma",

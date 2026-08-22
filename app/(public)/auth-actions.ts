@@ -7,7 +7,7 @@ import { getDatabase } from "@/lib/db/client";
 import { recordAudit } from "@/lib/auth/audit";
 import { hashPassword, verifyPassword } from "@/lib/auth/password";
 import { getRequestMetadata } from "@/lib/auth/request";
-import { createSession, revokeAllUserSessions, revokeCurrentSession } from "@/lib/auth/session";
+import { createSession, revokeAllUserSessions } from "@/lib/auth/session";
 import { forgotPasswordSchema, loginSchema, profileSchema, registerSchema, resetPasswordSchema } from "@/lib/auth/validation";
 import { requireUser } from "@/lib/auth/authorization";
 
@@ -37,7 +37,7 @@ export async function registerAction(_state: AuthActionState, formData: FormData
   });
   await createSession(user.id);
   await recordAudit({ actorId: user.id, action: "USER_REGISTERED", entityType: "User", entityId: user.id });
-  redirect(safeDestination(formData.get("next"), "/account"));
+  redirect(safeDestination(formData.get("next"), "/dashboard"));
 }
 
 export async function loginAction(_state: AuthActionState, formData: FormData): Promise<AuthActionState> {
@@ -68,14 +68,7 @@ export async function loginAction(_state: AuthActionState, formData: FormData): 
   await database.user.update({ where: { id: user.id }, data: { lastLoginAt: new Date() } });
   await createSession(user.id);
   await recordAudit({ actorId: user.id, action: "USER_LOGGED_IN", entityType: "Session" });
-  redirect(safeDestination(formData.get("next"), "/account"));
-}
-
-export async function logoutAction() {
-  const user = await requireUser();
-  await revokeCurrentSession();
-  await recordAudit({ actorId: user.id, action: "USER_LOGGED_OUT", entityType: "Session" });
-  redirect("/");
+  redirect(safeDestination(formData.get("next"), "/dashboard"));
 }
 
 export async function updateProfileAction(_state: AuthActionState, formData: FormData): Promise<AuthActionState> {

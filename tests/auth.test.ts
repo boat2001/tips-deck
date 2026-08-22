@@ -1,6 +1,7 @@
 import { describe, expect, it } from "vitest";
 import { hashPassword, verifyPassword } from "@/lib/auth/password";
 import { loginSchema, registerSchema, resetPasswordSchema } from "@/lib/auth/validation";
+import { normalizeInternationalPhone, removeLeadingTrunkZero } from "@/lib/auth/phone";
 
 describe("authentication", () => {
   it("normalizes registration identity and enforces matching strong passwords", () => {
@@ -15,6 +16,12 @@ describe("authentication", () => {
   it("accepts either a username or email at login", () => {
     expect(loginSchema.parse({ identifier: " USER_NAME ", password: "anything" }).identifier).toBe("user_name");
     expect(loginSchema.parse({ identifier: "USER@EXAMPLE.COM", password: "anything" }).identifier).toBe("user@example.com");
+  });
+
+  it("removes a domestic trunk zero from international phone numbers", () => {
+    expect(removeLeadingTrunkZero("059 166 1816")).toBe("59 166 1816");
+    expect(normalizeInternationalPhone("+233 059 166 1816")).toBe("+233591661816");
+    expect(normalizeInternationalPhone("+225 07 12 34 56 78")).toBe("+2250712345678");
   });
 
   it("hashes passwords and rejects incorrect values", async () => {

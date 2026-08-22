@@ -8,6 +8,7 @@ import { requireAdmin } from "@/lib/auth/authorization";
 import { loadSportyBetSlip } from "@/lib/bookings/sportybet";
 import { getDatabase } from "@/lib/db/client";
 import { getFixtureDateWindows, getUtcDayRange } from "@/lib/football/dates";
+import { invalidateBookingData, invalidateVipData } from "@/lib/cache/invalidate";
 
 const loadSchema = z.object({
   code: z.string().trim().toUpperCase().regex(/^[A-Z0-9]{4,20}$/),
@@ -32,6 +33,7 @@ function splitPrediction(value: string | null | undefined) {
 }
 
 function refreshPublicContent() {
+  invalidateBookingData();
   revalidatePath("/");
   revalidatePath("/predictions");
   revalidatePath("/vip");
@@ -181,6 +183,7 @@ export async function updateVipControl(formData: FormData) {
     return updated;
   });
   await recordAudit({ actorId: actor.id, action: isSoldOut ? "VIP_MARKED_SOLD_OUT" : "VIP_MARKED_AVAILABLE", entityType: "Plan", entityId: parsed.id, metadata: { name: plan.name, priceMinor } });
+  invalidateVipData();
   revalidatePath("/vip");
   revalidatePath("/admin/bookings");
   revalidatePath("/admin/plans");

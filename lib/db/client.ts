@@ -10,7 +10,7 @@ const globalForPrisma = globalThis as unknown as {
 // Bump this whenever a migration adds or removes Prisma models. During Next.js
 // hot reload, globalThis survives module reloads and can otherwise retain a
 // client generated from the previous schema.
-const prismaSchemaVersion = "20260814094500";
+const prismaSchemaVersion = "20260821134500";
 
 function createPrismaClient() {
   const connectionString = process.env.DATABASE_URL;
@@ -21,7 +21,9 @@ function createPrismaClient() {
 
   const adapter = new PrismaPg({
     connectionString: normalizeDatabaseConnectionString(connectionString),
-    maxUses: 1,
+    max: Number(process.env.DATABASE_POOL_SIZE ?? (process.env.NODE_ENV === "production" ? 5 : 10)),
+    idleTimeoutMillis: 20_000,
+    connectionTimeoutMillis: 10_000,
   });
   return new PrismaClient({ adapter });
 }
@@ -31,10 +33,8 @@ export function getDatabase() {
     ? globalForPrisma.prisma
     : createPrismaClient();
 
-  if (process.env.NODE_ENV !== "production") {
-    globalForPrisma.prisma = prisma;
-    globalForPrisma.prismaSchemaVersion = prismaSchemaVersion;
-  }
+  globalForPrisma.prisma = prisma;
+  globalForPrisma.prismaSchemaVersion = prismaSchemaVersion;
 
   return prisma;
 }

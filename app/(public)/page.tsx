@@ -6,6 +6,7 @@ import { getPredictionDayBoard, getPublicPerformance, type PublicPrediction } fr
 import { getCurrentUser } from "@/lib/auth/session";
 import { getPremiumAccessContext } from "@/lib/auth/authorization";
 import type { Metadata } from "next";
+import { MemberDashboard } from "@/components/member/member-dashboard";
 
 export const metadata: Metadata = { alternates: { canonical: "/" } };
 
@@ -13,7 +14,9 @@ export const dynamic = "force-dynamic";
 
 export default async function HomePage({ searchParams }: { searchParams: Promise<{ date?: string }> }) {
   const referenceDate = fromDateKey((await searchParams).date) ?? new Date();
+  const performancePromise = getPublicPerformance();
   const user = await getCurrentUser();
+  if (user) return <MemberDashboard user={user} />;
   const premiumAccess = await getPremiumAccessContext(user);
   const telegramUrl = process.env.NEXT_PUBLIC_TELEGRAM_URL ?? "https://t.me/+S6zQhRKDOV02YjJk";
   const whatsappUrl = process.env.NEXT_PUBLIC_WHATSAPP_URL ?? "https://wa.me/?text=Join%20Tips%20Deck%20for%20daily%20sports%20predictions";
@@ -28,7 +31,7 @@ export default async function HomePage({ searchParams }: { searchParams: Promise
   try {
     [days, performance] = await Promise.all([
       getPredictionDayBoard(referenceDate, premiumAccess),
-      getPublicPerformance(),
+      performancePromise,
     ]);
   } catch {
     // The marketing page remains available while a local database is starting.

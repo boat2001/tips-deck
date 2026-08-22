@@ -2,8 +2,8 @@ import Image from "next/image";
 import Link from "next/link";
 
 const groups = [
-  { title: "Quick Links", links: [["Home", "/"], ["About Us", "/about"], ["Predictions", "/predictions"], ["VIP Plans", "/vip"]] },
-  { title: "Support", links: [["Settings", "/account"], ["Help Center", "/help"], ["Contact Us", "/contact"], ["Terms of Service", "/terms"], ["Privacy Policy", "/privacy"], ["Responsible Gaming", "/responsible-betting"]] },
+  { title: "Quick Links", links: [["Home", "/"], ["About Us", "/about"], ["Predictions", "/predictions"], ["VIP Plans", "/vip"], ["Settings", "/account"]] },
+  { title: "Support", links: [["Help Center", "/help"], ["Contact Us", "/contact"], ["Terms of Service", "/terms"], ["Privacy Policy", "/privacy"], ["Responsible Gaming", "/responsible-betting"]] },
 ] as const;
 
 export function SiteFooter() {

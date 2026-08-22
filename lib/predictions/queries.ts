@@ -1,5 +1,7 @@
+import { unstable_cache } from "next/cache";
 import { getDatabase } from "@/lib/db/client";
-import { getFixtureDateWindows, getUtcDayRange } from "@/lib/football/dates";
+import { publicPerformanceTag, publicPredictionTag, publicVipTag } from "@/lib/cache/tags";
+import { getFixtureDateWindows, getUtcDayRange, toDateKey } from "@/lib/football/dates";
 
 export interface PublicPrediction {
   id: string;
@@ -98,16 +100,24 @@ export async function getPublicPredictionsByDate(
   date: string,
   premiumAccess: PremiumAccess = false,
 ): Promise<PublicPrediction[]> {
-  const database = getDatabase();
   const { start, end } = getUtcDayRange(date);
+  return getPublicPredictionsByRange(start, end, premiumAccess);
+}
+
+async function getPublicPredictionsByRange(
+  start: Date,
+  end: Date,
+  premiumAccess: PremiumAccess,
+): Promise<PublicPrediction[]> {
+  const database = getDatabase();
   const where = {
     status: "PUBLISHED" as const,
     fixture: { kickoffAt: { gte: start, lt: end } },
     OR: [{ bookingId: null }, { booking: { isActive: true } }],
   };
 
-  const freePredictions = await database.prediction.findMany({
-    where: { ...where, visibility: "FREE" },
+  const predictions = await database.prediction.findMany({
+    where,
     select: {
       id: true,
       slug: true,
@@ -120,29 +130,37 @@ export async function getPublicPredictionsByDate(
       result: true,
       ...relationSelect,
     },
+    orderBy: { fixture: { kickoffAt: "asc" } },
   });
 
-  const premiumPredictions = await database.prediction.findMany({
-    where: { ...where, visibility: "PREMIUM" },
-    select: { id: true, slug: true, market: true, selection: true, odds: true, confidence: true, analysis: true, visibility: true, result: true, ...relationSelect },
-  });
-
-  return [...freePredictions.map((item) => toPublicPrediction(item, false)), ...premiumPredictions.map((item) => toPublicPrediction(item, !canAccessPremium(premiumAccess, item.deck?.id ?? null)))]
-    .sort((a, b) => a.kickoffAt.localeCompare(b.kickoffAt));
+  return predictions.map((item) => toPublicPrediction(item, item.visibility === "PREMIUM" && !canAccessPremium(premiumAccess, item.deck?.id ?? null)));
 }
 
-export async function getPredictionDayBoard(reference = new Date(), premiumAccess: PremiumAccess = false) {
+async function getPredictionDayBoardUncached(reference: Date, premiumAccess: PremiumAccess) {
   const windows = getFixtureDateWindows(reference);
-  const predictionSets = await Promise.all(
-    windows.map((window) => getPublicPredictionsByDate(window.date, premiumAccess)),
-  );
+  const predictions = await getPublicPredictionsByRange(windows[0].start, windows[windows.length - 1].end, premiumAccess);
 
-  return windows.map((window, index) => ({
+  return windows.map((window) => ({
     key: window.key,
     label: window.label,
     date: window.date,
-    predictions: predictionSets[index],
+    predictions: predictions.filter((prediction) => prediction.kickoffAt.slice(0, 10) === window.date),
   }));
+}
+
+const getCachedPredictionDayBoard = unstable_cache(
+  async (referenceDate: string, premiumAccess: PremiumAccess) => getPredictionDayBoardUncached(new Date(`${referenceDate}T12:00:00.000Z`), premiumAccess),
+  ["prediction-day-board-v1"],
+  { revalidate: 60, tags: [publicPredictionTag] },
+);
+
+export async function getPredictionDayBoard(reference = new Date(), premiumAccess: PremiumAccess = false) {
+  const normalizedAccess = typeof premiumAccess === "boolean"
+    ? premiumAccess
+    : premiumAccess.allPremium || premiumAccess.deckIds.length
+      ? { allPremium: premiumAccess.allPremium, deckIds: [...premiumAccess.deckIds].sort() }
+      : false;
+  return getCachedPredictionDayBoard(toDateKey(reference), normalizedAccess);
 }
 
 export async function getPublicPredictionBySlug(slug: string, premiumAccess: PremiumAccess = false) {
@@ -163,7 +181,7 @@ export async function getPublicPredictionBySlug(slug: string, premiumAccess: Pre
   return toPublicPrediction(prediction, locked);
 }
 
-export async function getPublicPerformance() {
+const getCachedPublicPerformance = unstable_cache(async function getCachedPublicPerformance() {
   const grouped = await getDatabase().prediction.groupBy({
     by: ["result"],
     where: {
@@ -182,9 +200,13 @@ export async function getPublicPerformance() {
     settled,
     winRate: settled > 0 ? Math.round((won / settled) * 100) : 0,
   };
+}, ["public-performance-v1"], { revalidate: 300, tags: [publicPerformanceTag] });
+
+export async function getPublicPerformance() {
+  return getCachedPublicPerformance();
 }
 
-export async function getVipHistoryByDate(date: string) {
+const getCachedVipHistoryByDate = unstable_cache(async function getCachedVipHistoryByDate(date: string) {
   const { start, end } = getUtcDayRange(date);
   const decks = await getDatabase().deck.findMany({
     where: { isPremium: true, isActive: true },
@@ -227,6 +249,10 @@ export async function getVipHistoryByDate(date: string) {
       result: prediction.result,
     })),
   }));
+}, ["vip-history-v1"], { revalidate: 60, tags: [publicVipTag, publicPredictionTag] });
+
+export async function getVipHistoryByDate(date: string) {
+  return getCachedVipHistoryByDate(date);
 }
 
 export async function getPublishedPredictionSitemapRows() {

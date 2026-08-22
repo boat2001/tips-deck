@@ -1,4 +1,4 @@
-import "dotenv/config";
+import { config } from "dotenv";
 import bcrypt from "bcryptjs";
 import { PrismaPg } from "@prisma/adapter-pg";
 import { PrismaClient } from "@prisma/client";
@@ -7,6 +7,9 @@ import { getFixtureDateWindows } from "../lib/football/dates";
 import { MockFootballProvider } from "../lib/football/mock-provider";
 import { createPrismaFixtureRepository } from "../lib/football/repository";
 import { syncFixturesForDates } from "../lib/football/sync";
+
+// Keep direct seed execution consistent with Next.js and prisma.config.ts.
+config({ path: [".env.local", ".env"] });
 
 const connectionString = process.env.DATABASE_URL;
 
@@ -25,10 +28,11 @@ async function main() {
   const adminUsername = process.env.SEED_ADMIN_USERNAME?.trim().toLowerCase() || "tipsdeck-admin";
   if (adminEmail && adminPassword) {
     if (adminPassword.length < 8) throw new Error("SEED_ADMIN_PASSWORD must be at least 8 characters.");
+    const passwordHash = await bcrypt.hash(adminPassword, 12);
     await prisma.user.upsert({
       where: { email: adminEmail },
-      update: { role: "SUPER_ADMIN", isActive: true },
-      create: { email: adminEmail, username: adminUsername, displayName: "Tips Deck Admin", passwordHash: await bcrypt.hash(adminPassword, 12), role: "SUPER_ADMIN", emailVerifiedAt: new Date() },
+      update: { passwordHash, role: "SUPER_ADMIN", isActive: true },
+      create: { email: adminEmail, username: adminUsername, displayName: "Tips Deck Admin", passwordHash, role: "SUPER_ADMIN", emailVerifiedAt: new Date() },
     });
   }
 

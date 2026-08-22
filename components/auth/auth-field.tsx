@@ -1,25 +1,26 @@
 "use client";
 
 import { useState } from "react";
+import { removeLeadingTrunkZero } from "@/lib/auth/phone";
 
 type IconName = "user" | "email" | "phone" | "lock";
 
 const countries = [
-  { code: "GH", name: "Ghana", dial: "+233", flag: "🇬🇭" },
-  { code: "NG", name: "Nigeria", dial: "+234", flag: "🇳🇬" },
-  { code: "CI", name: "Côte d’Ivoire", dial: "+225", flag: "🇨🇮" },
-  { code: "TG", name: "Togo", dial: "+228", flag: "🇹🇬" },
-  { code: "BF", name: "Burkina Faso", dial: "+226", flag: "🇧🇫" },
-  { code: "KE", name: "Kenya", dial: "+254", flag: "🇰🇪" },
-  { code: "ZA", name: "South Africa", dial: "+27", flag: "🇿🇦" },
-  { code: "GB", name: "United Kingdom", dial: "+44", flag: "🇬🇧" },
-  { code: "US", name: "United States / Canada", dial: "+1", flag: "🇺🇸" },
+  { code: "GH", name: "Ghana", dial: "+233", flag: "🇬🇭", usesTrunkZero: true },
+  { code: "NG", name: "Nigeria", dial: "+234", flag: "🇳🇬", usesTrunkZero: true },
+  { code: "CI", name: "Côte d’Ivoire", dial: "+225", flag: "🇨🇮", usesTrunkZero: false },
+  { code: "TG", name: "Togo", dial: "+228", flag: "🇹🇬", usesTrunkZero: false },
+  { code: "BF", name: "Burkina Faso", dial: "+226", flag: "🇧🇫", usesTrunkZero: false },
+  { code: "KE", name: "Kenya", dial: "+254", flag: "🇰🇪", usesTrunkZero: true },
+  { code: "ZA", name: "South Africa", dial: "+27", flag: "🇿🇦", usesTrunkZero: true },
+  { code: "GB", name: "United Kingdom", dial: "+44", flag: "🇬🇧", usesTrunkZero: true },
+  { code: "US", name: "United States / Canada", dial: "+1", flag: "🇺🇸", usesTrunkZero: false },
 ] as const;
 
 export function AuthField({ label, name, type = "text", placeholder, autoComplete, required, icon }: { label: string; name: string; type?: string; placeholder: string; autoComplete?: string; required?: boolean; icon: IconName }) {
   const [visible, setVisible] = useState(false);
   const password = type === "password";
-  return <label className="block text-sm font-bold text-[#183457]">{label}<span className="relative mt-2 block"><span className="pointer-events-none absolute inset-y-0 left-3 grid w-6 place-items-center text-slate-400" aria-hidden="true"><FieldIcon name={icon} /></span><input name={name} required={required} type={password && visible ? "text" : type} autoComplete={autoComplete} placeholder={placeholder} className={`h-11 w-full rounded-lg border border-slate-200 bg-white pl-11 text-sm text-slate-800 outline-none transition placeholder:text-sm placeholder:text-slate-400 focus:border-emerald-600 focus:ring-2 focus:ring-emerald-100 ${password ? "pr-11" : "pr-3"}`} />{password && <button type="button" onClick={() => setVisible((value) => !value)} aria-label={visible ? "Hide password" : "Show password"} className="absolute inset-y-0 right-2 grid w-8 place-items-center rounded-md text-slate-400 transition hover:text-emerald-700 focus-visible:outline-2 focus-visible:outline-emerald-600"><EyeIcon open={visible} /></button>}</span></label>;
+  return <label className="block min-w-0 text-sm font-bold text-[#183457]">{label}<span className="relative mt-2 block min-w-0"><span className="pointer-events-none absolute inset-y-0 left-3 grid w-6 place-items-center text-slate-400" aria-hidden="true"><FieldIcon name={icon} /></span><input name={name} required={required} type={password && visible ? "text" : type} autoComplete={autoComplete} placeholder={placeholder} className={`h-11 min-w-0 w-full max-w-full rounded-lg border border-slate-200 bg-white pl-11 text-sm text-slate-800 outline-none transition placeholder:text-sm placeholder:text-slate-400 focus:border-emerald-600 focus:ring-2 focus:ring-emerald-100 ${password ? "pr-11" : "pr-3"}`} />{password && <button type="button" onClick={() => setVisible((value) => !value)} aria-label={visible ? "Hide password" : "Show password"} className="absolute inset-y-0 right-2 grid w-8 place-items-center rounded-md text-slate-400 transition hover:text-emerald-700 focus-visible:outline-2 focus-visible:outline-emerald-600"><EyeIcon open={visible} /></button>}</span></label>;
 }
 
 export function PhoneField() {
@@ -34,14 +35,16 @@ export function PhoneField() {
       const detected = [...countries].sort((a, b) => b.dial.length - a.dial.length).find((item) => compact.startsWith(item.dial));
       if (detected) {
         setCountryCode(detected.code);
-        setLocalNumber(compact.slice(detected.dial.length));
+        const detectedLocalNumber = compact.slice(detected.dial.length);
+        setLocalNumber(detected.usesTrunkZero ? removeLeadingTrunkZero(detectedLocalNumber) : detectedLocalNumber);
         return;
       }
     }
-    setLocalNumber(normalized.replace(/^\+/, ""));
+    const nationalNumber = normalized.replace(/^\+/, "");
+    setLocalNumber(country.usesTrunkZero ? removeLeadingTrunkZero(nationalNumber) : nationalNumber);
   }
 
-  return <label className="block text-sm font-bold text-[#183457]">Phone Number<span className="mt-2 flex h-11 overflow-hidden rounded-lg border border-slate-200 bg-white transition focus-within:border-emerald-600 focus-within:ring-2 focus-within:ring-emerald-100"><span className="relative flex shrink-0 items-center border-r border-slate-200 bg-slate-50"><span className="pointer-events-none flex items-center gap-2 px-3 text-sm font-bold text-[#183457]"><CountryFlag code={country.code} /><span>{country.dial}</span></span><select aria-label="Country code" value={country.code} onChange={(event) => setCountryCode(event.target.value)} className="absolute inset-0 cursor-pointer opacity-0">{countries.map((item) => <option key={item.code} value={item.code}>{item.name} ({item.dial})</option>)}</select></span><input name="phoneLocal" value={localNumber} onChange={(event) => updateNumber(event.target.value)} type="tel" required autoComplete="tel-national" inputMode="tel" placeholder="20 123 4567" className="min-w-0 flex-1 bg-white px-4 text-sm text-slate-800 outline-none placeholder:text-sm placeholder:text-slate-400" /><input type="hidden" name="phone" value={`${country.dial} ${localNumber.trim()}`} /></span></label>;
+  return <label className="block min-w-0 text-sm font-bold text-[#183457]">Phone Number<span className="mt-2 flex h-11 min-w-0 max-w-full overflow-hidden rounded-lg border border-slate-200 bg-white transition focus-within:border-emerald-600 focus-within:ring-2 focus-within:ring-emerald-100"><span className="relative flex shrink-0 items-center border-r border-slate-200 bg-slate-50"><span className="pointer-events-none flex items-center gap-2 px-3 text-sm font-bold text-[#183457]"><CountryFlag code={country.code} /><span>{country.dial}</span></span><select aria-label="Country code" value={country.code} onChange={(event) => { const selected = countries.find((item) => item.code === event.target.value) ?? countries[0]; setCountryCode(selected.code); setLocalNumber(selected.usesTrunkZero ? removeLeadingTrunkZero(localNumber) : localNumber); }} className="absolute inset-0 cursor-pointer opacity-0">{countries.map((item) => <option key={item.code} value={item.code}>{item.name} ({item.dial})</option>)}</select></span><input name="phoneLocal" value={localNumber} onChange={(event) => updateNumber(event.target.value)} type="tel" required autoComplete="tel-national" inputMode="tel" placeholder="20 123 4567" className="min-w-0 flex-1 bg-white px-4 text-sm text-slate-800 outline-none placeholder:text-sm placeholder:text-slate-400" /><input type="hidden" name="phone" value={`${country.dial} ${localNumber.trim()}`} /></span></label>;
 }
 
 function CountryFlag({ code }: { code: string }) {

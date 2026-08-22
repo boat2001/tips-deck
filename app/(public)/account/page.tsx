@@ -20,11 +20,13 @@ export default async function AccountPage({ searchParams }: { searchParams: Prom
   return (
     <main className="bg-[#f7f9f8] px-5 py-12 sm:px-8 sm:py-16">
       <div className="mx-auto grid max-w-4xl gap-6 md:grid-cols-[0.8fr_1.2fr]">
-        <section className="rounded-2xl bg-[#063f2c] p-7 text-white">
-          <h1 className="text-3xl font-black">{user.displayName || user.username}</h1>
-          <p className="mt-2 text-sm text-emerald-50/70">@{user.username}</p>
-          <dl className="mt-8 space-y-4 text-sm"><div><dt className="text-emerald-100/55">Membership</dt><dd className="mt-1 font-black">{premiumAccess.allPremium || premiumAccess.deckIds.length > 0 ? "VIP access" : "Free member"}</dd></div><div><dt className="text-emerald-100/55">Role</dt><dd className="mt-1 font-black">{user.role.replaceAll("_", " ")}</dd></div></dl>
-          {isAdmin && <Link href="/admin" className="mt-7 inline-flex rounded-xl bg-lime-300 px-4 py-3 text-sm font-black text-emerald-950">Open Admin Control Panel</Link>}
+        <section className="rounded-xl border border-slate-200 border-t-4 border-t-emerald-600 bg-white p-7">
+          <p className="text-xs font-black uppercase tracking-[0.12em] text-emerald-700">Settings</p>
+          <h1 className="mt-2 text-2xl font-black text-slate-950">{user.displayName || user.username}</h1>
+          <p className="mt-1 text-sm text-slate-500">@{user.username}</p>
+          <dl className="mt-7 space-y-4 text-sm"><div><dt className="text-slate-400">Account</dt><dd className="mt-1 font-black text-slate-800">{premiumAccess.allPremium || premiumAccess.deckIds.length > 0 ? "VIP access" : "Free account"}</dd></div><div><dt className="text-slate-400">Role</dt><dd className="mt-1 font-black text-slate-800">{user.role.replaceAll("_", " ")}</dd></div></dl>
+          {isAdmin && <Link href="/admin" className="mt-6 inline-flex rounded-lg bg-[#078a4f] px-4 py-2.5 text-sm font-black text-white">Admin</Link>}
+          <div className="mt-5 flex flex-wrap gap-4"><Link href="/dashboard" className="text-sm font-black text-emerald-700">Dashboard</Link><Link href="/activity" className="text-sm font-black text-emerald-700">Activity</Link></div>
         </section>
         <section className="rounded-2xl border border-slate-200 bg-white p-7 shadow-[0_18px_50px_rgba(15,23,42,0.06)]">
           <h2 className="text-2xl font-black text-slate-950">Profile details</h2>

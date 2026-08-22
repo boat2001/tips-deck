@@ -10,5 +10,5 @@ export default async function NewPredictionPage({ searchParams }: { searchParams
     getDatabase().fixture.findMany({ include: { league: true, homeTeam: true, awayTeam: true }, orderBy: { kickoffAt: "desc" }, take: 80 }),
     getDatabase().deck.findMany({ where: { isActive: true }, orderBy: { sortOrder: "asc" } }),
   ]);
-  return <main className="mx-auto max-w-3xl px-5 py-10 sm:px-8 sm:py-14"><p className="text-xs font-black uppercase tracking-[0.14em] text-emerald-600">Content desk</p><h1 className="mt-2 text-4xl font-black tracking-[-0.05em] text-slate-950">Create prediction</h1><div className="mt-8 rounded-2xl border border-slate-200 bg-white p-6 sm:p-8"><PredictionForm action={createPrediction} fixtures={fixtures} decks={decks} selectedFixtureId={fixtureId} /></div></main>;
+  return <main className="mx-auto max-w-3xl px-5 py-10 sm:px-8 sm:py-14"><h1 className="text-4xl font-black tracking-[-0.05em] text-slate-950">Create prediction</h1><div className="mt-8 rounded-2xl border border-slate-200 bg-white p-6 sm:p-8"><PredictionForm action={createPrediction} fixtures={fixtures} decks={decks} selectedFixtureId={fixtureId} /></div></main>;
 }

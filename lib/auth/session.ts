@@ -1,6 +1,7 @@
 import "server-only";
 import { createHash, randomBytes } from "node:crypto";
 import { cookies } from "next/headers";
+import { cache } from "react";
 import { getDatabase } from "@/lib/db/client";
 import { sessionCookieName, sessionDurationMilliseconds } from "@/lib/auth/constants";
 import { getRequestMetadata } from "@/lib/auth/request";
@@ -46,7 +47,7 @@ export async function revokeAllUserSessions(userId: string) {
   });
 }
 
-export async function getCurrentUser() {
+export const getCurrentUser = cache(async function getCurrentUser() {
   const token = (await cookies()).get(sessionCookieName)?.value;
   if (!token) return null;
 
@@ -67,6 +68,8 @@ export async function getCurrentUser() {
           emailVerifiedAt: true,
           premiumAccessUntil: true,
           isActive: true,
+          lastLoginAt: true,
+          createdAt: true,
         },
       },
     },
@@ -74,4 +77,4 @@ export async function getCurrentUser() {
 
   if (!session || session.revokedAt || session.expiresAt <= new Date() || !session.user.isActive) return null;
   return session.user;
-}
+});

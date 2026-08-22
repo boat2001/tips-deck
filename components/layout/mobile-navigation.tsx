@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
-import { logoutAction } from "@/app/(public)/auth-actions";
+import { logoutAction } from "@/app/(public)/logout-action";
 
 const publicItems = [
   { label: "Home", href: "/" },
@@ -11,10 +11,18 @@ const publicItems = [
   { label: "About Us", href: "/about" },
 ] as const;
 
+const memberItems = [
+  { label: "Dashboard", href: "/dashboard" },
+  { label: "Predictions", href: "/predictions" },
+  { label: "Activity", href: "/activity" },
+  { label: "VIP Plans", href: "/vip" },
+] as const;
+
 export function MobileNavigation({ authenticated, admin }: { authenticated: boolean; admin: boolean }) {
   const [isOpen, setIsOpen] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
   const buttonRef = useRef<HTMLButtonElement>(null);
+  const navigationItems = authenticated ? memberItems : publicItems;
 
   useEffect(() => {
     if (!isOpen) return;
@@ -66,7 +74,7 @@ export function MobileNavigation({ authenticated, admin }: { authenticated: bool
           className="absolute right-0 top-12 w-64 overflow-hidden rounded-xl border border-slate-200 bg-white shadow-xl"
         >
           <div className="divide-y divide-slate-200">
-            {publicItems.map((item) => (
+            {navigationItems.map((item) => (
               <Link
                 key={item.href}
                 href={item.href}

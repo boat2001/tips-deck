@@ -32,7 +32,7 @@ export default async function AdminBookingsPage({ searchParams }: { searchParams
 
   return (
     <main className="mx-auto max-w-7xl px-5 py-10 sm:px-8 sm:py-14">
-      <div><p className="text-xs font-black uppercase tracking-[0.14em] text-emerald-600">Content desk</p><h1 className="mt-2 text-4xl font-black tracking-[-0.05em] text-slate-950">Games Management</h1><p className="mt-3 text-sm text-slate-500">Load complete SportyBet slips, assign them to Free or VIP, settle individual games and control VIP availability.</p></div>
+      <h1 className="text-4xl font-black tracking-[-0.05em] text-slate-950">Games Management</h1>
 
       <section className="mt-9 rounded-2xl border border-slate-200 bg-white p-6" aria-labelledby="vip-control-heading">
         <div><p className="text-xs font-black uppercase tracking-[0.12em] text-emerald-600">Quick control</p><h2 id="vip-control-heading" className="mt-1 text-xl font-black text-slate-950">VIP Games Control</h2></div>

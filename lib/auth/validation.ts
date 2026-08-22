@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { normalizeInternationalPhone } from "@/lib/auth/phone";
 
 const email = z.string().trim().toLowerCase().email().max(254);
 const username = z.string().trim().toLowerCase().min(3).max(30).regex(/^[a-z0-9_-]+$/, "Use only letters, numbers, underscores, or hyphens.");
@@ -7,7 +8,7 @@ const password = z.string().min(8).max(72).refine((value) => Buffer.byteLength(v
 export const registerSchema = z.object({
   username,
   email,
-  phone: z.string().trim().min(7, "Enter a valid phone number.").max(30).regex(/^\+?[0-9 ()-]+$/, "Enter a valid phone number."),
+  phone: z.string().trim().min(7, "Enter a valid phone number.").max(30).regex(/^\+?[0-9 ()-]+$/, "Enter a valid phone number.").transform(normalizeInternationalPhone),
   password,
   confirmPassword: z.string(),
   termsAccepted: z.literal("on", { error: "You must agree to the Terms of Service and Privacy Policy." }),

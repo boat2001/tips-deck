@@ -45,8 +45,14 @@ export async function MemberDashboard({ user }: { user: CurrentUser }) {
             <p className="mt-2 text-sm text-slate-500">Welcome, {firstName(user)}. View the latest tips, VIP access and account activity.</p>
           </div>
           <div className="flex flex-wrap items-center gap-3">
-            <a href={telegramUrl} target="_blank" rel="noreferrer" className="inline-flex min-h-10 items-center justify-center rounded-lg bg-[#229ED9] px-4 text-sm font-black text-white hover:bg-[#168ac0]">Join Telegram</a>
-            <a href={whatsappUrl} target="_blank" rel="noreferrer" className="inline-flex min-h-10 items-center justify-center rounded-lg bg-[#25D366] px-4 text-sm font-black text-white hover:bg-[#1fbd5a]">Join WhatsApp</a>
+            <a href={telegramUrl} target="_blank" rel="noreferrer" className="inline-flex min-h-10 items-center justify-center gap-2 rounded-lg bg-[#229ED9] px-4 text-sm font-black text-white hover:bg-[#168ac0]">
+              <svg viewBox="0 0 24 24" className="size-5 shrink-0 fill-current" aria-hidden="true"><path d="M21.7 3.3a1.1 1.1 0 0 0-1.15-.17L2.92 10.25a1.05 1.05 0 0 0 .08 1.98l4.55 1.48 1.74 5.31c.14.44.55.74 1.01.74.3 0 .58-.12.78-.34l2.54-2.72 4.69 3.45c.27.2.62.26.94.16.33-.1.58-.36.67-.69L22 4.42c.1-.4-.01-.83-.3-1.12ZM9.2 13.03l8.75-5.55-7.1 7.34-.47 2.03-1.18-3.82Z" /></svg>
+              Join Telegram
+            </a>
+            <a href={whatsappUrl} target="_blank" rel="noreferrer" className="inline-flex min-h-10 items-center justify-center gap-2 rounded-lg bg-[#25D366] px-4 text-sm font-black text-white hover:bg-[#1fbd5a]">
+              <svg viewBox="0 0 24 24" className="size-5 shrink-0 fill-current" aria-hidden="true"><path d="M12 2a9.82 9.82 0 0 0-8.36 14.98L2.1 22l5.18-1.5A9.94 9.94 0 1 0 12 2Zm0 17.84a7.75 7.75 0 0 1-3.95-1.08l-.28-.17-3.07.89.91-2.99-.19-.3A7.75 7.75 0 1 1 12 19.84Zm4.25-5.8c-.23-.12-1.38-.68-1.6-.76-.21-.08-.37-.12-.52.12-.16.23-.6.76-.74.92-.14.15-.27.17-.5.06-1.37-.68-2.27-1.22-3.18-2.77-.24-.41.24-.38.68-1.27.08-.16.04-.3-.02-.42-.06-.11-.52-1.26-.72-1.73-.19-.45-.38-.39-.52-.4h-.45c-.16 0-.41.06-.62.29-.21.23-.82.8-.82 1.96 0 1.15.84 2.27.96 2.42.12.15 1.65 2.52 4 3.53.56.24 1 .39 1.34.5.56.18 1.07.15 1.47.09.45-.07 1.38-.57 1.58-1.11.19-.55.19-1.02.13-1.12-.06-.1-.22-.16-.45-.27Z" /></svg>
+              Join WhatsApp
+            </a>
           </div>
         </header>
 
